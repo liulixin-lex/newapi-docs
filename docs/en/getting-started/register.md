@@ -6,7 +6,7 @@ description: "Registration entry points and GitHub, LinuxDO, and email sign-up m
 
 Sign-up page: https://api.gguuai.com/sign-up
 
-![Sign-up page showing email registration plus GitHub and LinuxDO options](/images/tutorial/1.png)
+![Sign-up page showing email registration plus GitHub and LinuxDO options](/images/tutorial/1.webp)
 
 ## Open the Sign-up Page
 

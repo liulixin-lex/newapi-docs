@@ -11,11 +11,11 @@ description: "Windows、macOS 与 Linux 的 CC-Switch 安装方式。"
 1. 点击下载链接→[传送门](https://github.com/farion1231/cc-switch/releases/latest)←，进入CC-Switch的Github Release页面
 2. 鼠标滚动到最下方选择适合自己版本的安装包，windows系统推荐下载普通msi后缀的安装包进行安装
 
-![CC-Switch GitHub Releases 页面中的安装包下载列表](/images/tutorial/18.png)
+![CC-Switch GitHub Releases 页面中的安装包下载列表](/images/tutorial/18.webp)
 
 1. 安装后运行CC-Switch主程序，界面如下。
 
-![CC-Switch 启动后的主界面](/images/tutorial/19.png)
+![CC-Switch 启动后的主界面](/images/tutorial/19.webp)
 
 ## 方式二：
 
@@ -39,7 +39,7 @@ brew install --cask cc-switch
 
 1. 安装完成后，在“启动台”或“应用程序”文件夹中找到 CC-Switch 并启动。
 
-![macOS 中安装并启动 CC-Switch 后的界面](/images/tutorial/20.png)
+![macOS 中安装并启动 CC-Switch 后的界面](/images/tutorial/20.webp)
 
 ## 方式二：
 

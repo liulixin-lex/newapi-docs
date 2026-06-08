@@ -20,7 +20,7 @@ npm list -g --depth=0
 
 Normally, the output should look like the screenshot below. It is also fine if it shows no content. If you see `command not found`, Node.js is not installed. Follow [this tutorial](https://www.runoob.com/nodejs/nodejs-install-setup.html) to install the environment required for Claude Code, Codex, and Gemini.
 
-![Terminal running npm list to check the Node.js and npm environment](/images/tutorial/46.png)
+![Terminal running npm list to check the Node.js and npm environment](/images/tutorial/46.webp)
 
 2. If Node.js was not installed and you have now completed installation, run the command above again. If it no longer shows `command not found`, installation succeeded.
 
@@ -34,7 +34,7 @@ npm i -g @openai/codex@latest
 npm i -g @google/gemini-cli@latest
 ```
 
-![Terminal installing Claude Code, Codex, and Gemini CLI globally with npm](/images/tutorial/47.png)
+![Terminal installing Claude Code, Codex, and Gemini CLI globally with npm](/images/tutorial/47.webp)
 
 ## (3) Test That Installation Succeeded
 
@@ -51,7 +51,7 @@ In a Windows or macOS terminal, run this command. If the screenshot content appe
 claude
 ```
 
-![Terminal running claude to test the Claude Code installation](/images/tutorial/48.png)
+![Terminal running claude to test the Claude Code installation](/images/tutorial/48.webp)
 
 **Codex**
 
@@ -61,7 +61,7 @@ In a Windows or macOS terminal, run this command. If the screenshot content appe
 codex
 ```
 
-![Terminal running codex to test the Codex installation](/images/tutorial/49.png)
+![Terminal running codex to test the Codex installation](/images/tutorial/49.webp)
 
 **Gemini**
 
@@ -71,5 +71,5 @@ In a Windows or macOS terminal, run this command. If the screenshot content appe
 gemini
 ```
 
-![Terminal running gemini to test the Gemini CLI installation](/images/tutorial/50.png)
+![Terminal running gemini to test the Gemini CLI installation](/images/tutorial/50.webp)
 

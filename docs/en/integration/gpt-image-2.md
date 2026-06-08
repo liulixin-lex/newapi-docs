@@ -125,34 +125,34 @@ curl --location 'https://api.gguuai.com/v1/images/edits' \
 1. Follow [Create an API Token](/en/getting-started/api-token.html) to create a token in the image-generation group.
 2. Open Cherry Studio, click the settings button in the upper-right corner, and enter the `Model Services` page.
 
-![Cherry Studio Model Services page for configuring the gpt-image-2 image model](/images/tutorial/93.png)
+![Cherry Studio Model Services page for configuring the gpt-image-2 image model](/images/tutorial/93.webp)
 
 3. At the bottom of the model service list, click `Add` to create a new provider. You can use the screenshot as a reference.
 
-![Form for adding an image generation provider in Cherry Studio](/images/tutorial/94.png)
+![Form for adding an image generation provider in Cherry Studio](/images/tutorial/94.webp)
 
 4. Open the GGUUAI provider you just created and fill in the API configuration.
 
 - API key: enter your image-generation group API key.
 - API address: `https://api.gguuai.com`
 
-![GGUUAI image provider API settings in Cherry Studio](/images/tutorial/95.png)
+![GGUUAI image provider API settings in Cherry Studio](/images/tutorial/95.webp)
 
 5. Click `Get model list` on the right side of the model area. After refreshing, add the `gpt-image-2` model. When it is added, you can see `gpt-image-2` in the model list on the provider configuration page.
 
-![gpt-image-2 shown in Cherry Studio after fetching the model list](/images/tutorial/96.png)
+![gpt-image-2 shown in Cherry Studio after fetching the model list](/images/tutorial/96.webp)
 
 6. Click the edit button on the right side of `gpt-image-2`, open the model editing window, set `Endpoint type` to `Image generation (OpenAI)`, then click `Save`.
 
-![Edit button for gpt-image-2 in Cherry Studio](/images/tutorial/97.png)
+![Edit button for gpt-image-2 in Cherry Studio](/images/tutorial/97.webp)
 
-![Model edit window with endpoint type set to Image generation (OpenAI) and saved](/images/tutorial/98.png)
+![Model edit window with endpoint type set to Image generation (OpenAI) and saved](/images/tutorial/98.webp)
 
 7. Return to the home page, click the `+` button at the top, and choose `Painting` from the app list.
 
-![Cherry Studio home application list with Painting selected](/images/tutorial/99.png)
+![Cherry Studio home application list with Painting selected](/images/tutorial/99.webp)
 
 8. After entering the painting page, choose the provider you just added under `Provider` on the left, choose `gpt-image-2` under `Model`, then enter a prompt to generate images.
 
-![Cherry Studio Painting page with provider, gpt-image-2 model, and prompt input selected](/images/tutorial/100.png)
+![Cherry Studio Painting page with provider, gpt-image-2 model, and prompt input selected](/images/tutorial/100.webp)
 

@@ -1,6 +1,125 @@
+import { existsSync, readFileSync } from 'node:fs'
+import { dirname, extname, join } from 'node:path'
+import { fileURLToPath } from 'node:url'
 import { defineConfig } from 'vitepress'
 
 const base = process.env.BASE_PATH || '/'
+const configDir = dirname(fileURLToPath(import.meta.url))
+const publicDir = join(configDir, '..', 'public')
+const publicImageSizeCache = new Map<string, { width: number; height: number } | null>()
+
+function readPngSize(filePath: string) {
+  const file = readFileSync(filePath)
+  const isPng = file.length >= 24 && file.toString('hex', 0, 8) === '89504e470d0a1a0a'
+  if (!isPng || file.toString('ascii', 12, 16) !== 'IHDR') return null
+
+  return {
+    width: file.readUInt32BE(16),
+    height: file.readUInt32BE(20)
+  }
+}
+
+function readWebpSize(filePath: string) {
+  const file = readFileSync(filePath)
+  const isWebp = file.length >= 30 && file.toString('ascii', 0, 4) === 'RIFF' && file.toString('ascii', 8, 12) === 'WEBP'
+  if (!isWebp) return null
+
+  let offset = 12
+  while (offset + 8 <= file.length) {
+    const chunkType = file.toString('ascii', offset, offset + 4)
+    const chunkSize = file.readUInt32LE(offset + 4)
+    const dataOffset = offset + 8
+
+    if (chunkType === 'VP8X' && dataOffset + 10 <= file.length) {
+      return {
+        width: file.readUIntLE(dataOffset + 4, 3) + 1,
+        height: file.readUIntLE(dataOffset + 7, 3) + 1
+      }
+    }
+
+    if (chunkType === 'VP8L' && dataOffset + 5 <= file.length) {
+      const b1 = file[dataOffset + 1]
+      const b2 = file[dataOffset + 2]
+      const b3 = file[dataOffset + 3]
+      const b4 = file[dataOffset + 4]
+
+      return {
+        width: 1 + b1 + ((b2 & 0x3f) << 8),
+        height: 1 + ((b2 & 0xc0) >> 6) + (b3 << 2) + ((b4 & 0x0f) << 10)
+      }
+    }
+
+    if (chunkType === 'VP8 ' && dataOffset + 10 <= file.length) {
+      return {
+        width: file.readUInt16LE(dataOffset + 6) & 0x3fff,
+        height: file.readUInt16LE(dataOffset + 8) & 0x3fff
+      }
+    }
+
+    offset = dataOffset + chunkSize + (chunkSize % 2)
+  }
+
+  return null
+}
+
+function getPublicImageSize(src: string) {
+  const cleanSrc = src.split(/[?#]/)[0]
+  if (!cleanSrc.startsWith('/images/')) return null
+
+  if (publicImageSizeCache.has(cleanSrc)) {
+    return publicImageSizeCache.get(cleanSrc)
+  }
+
+  const filePath = join(publicDir, cleanSrc.replace(/^\/+/, ''))
+  if (!existsSync(filePath)) {
+    publicImageSizeCache.set(cleanSrc, null)
+    return null
+  }
+
+  const extension = extname(cleanSrc).toLowerCase()
+  const size =
+    extension === '.png' || extension === '.webp'
+      ? readPngSize(filePath) ?? readWebpSize(filePath)
+      : null
+  publicImageSizeCache.set(cleanSrc, size)
+  return size
+}
+
+function enhanceMarkdownImages(md: any) {
+  const defaultRender =
+    md.renderer.rules.image ??
+    ((tokens: any[], index: number, options: any, env: any, self: any) => self.renderToken(tokens, index, options))
+
+  md.renderer.rules.image = (tokens: any[], index: number, options: any, env: any, self: any) => {
+    const token = tokens[index]
+    const src = token.attrGet('src')
+
+    token.attrSet('loading', token.attrGet('loading') ?? 'lazy')
+    token.attrSet('decoding', token.attrGet('decoding') ?? 'async')
+
+    if (src) {
+      const size = getPublicImageSize(src)
+      if (size) {
+        token.attrSet('width', token.attrGet('width') ?? String(size.width))
+        token.attrSet('height', token.attrGet('height') ?? String(size.height))
+      }
+    }
+
+    return defaultRender(tokens, index, options, env, self)
+  }
+}
+
+function wrapMarkdownTables(md: any) {
+  const defaultRender = (tokens: any[], index: number, options: any, _env: any, self: any) => self.renderToken(tokens, index, options)
+  const defaultTableOpen = md.renderer.rules.table_open ?? defaultRender
+  const defaultTableClose = md.renderer.rules.table_close ?? defaultRender
+
+  md.renderer.rules.table_open = (tokens: any[], index: number, options: any, env: any, self: any) =>
+    `<div class="doc-table-scroll">${defaultTableOpen(tokens, index, options, env, self)}`
+
+  md.renderer.rules.table_close = (tokens: any[], index: number, options: any, env: any, self: any) =>
+    `${defaultTableClose(tokens, index, options, env, self)}</div>`
+}
 
 const guideSidebar = [
   {
@@ -167,6 +286,12 @@ export default defineConfig({
   lang: 'zh-CN',
   cleanUrls: false,
   lastUpdated: true,
+  markdown: {
+    config(md) {
+      enhanceMarkdownImages(md)
+      wrapMarkdownTables(md)
+    }
+  },
   themeConfig: {
     siteTitle: 'GGUU API',
     nav: [

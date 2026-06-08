@@ -12,11 +12,11 @@ description: "Windows 与 macOS 下的 Codex 配置文件。"
 %userprofile%\.codex
 ```
 
-![Windows 运行窗口中输入 .codex 配置目录路径](/images/tutorial/61.png)
+![Windows 运行窗口中输入 .codex 配置目录路径](/images/tutorial/61.webp)
 
 1. 你的目录中可能会存在以下文件，不过我们用到的文件只有三个，需要配置的只有两个
 
-![Windows 的 Codex 配置目录，显示 config.toml、auth.json 和 AGENTS.md](/images/tutorial/62.png)
+![Windows 的 Codex 配置目录，显示 config.toml、auth.json 和 AGENTS.md](/images/tutorial/62.webp)
 
 - **`config.toml`**：Codex的核心配置文件，中转服务与MCP等都在此文件配置
 - **`auth.json`**：用来配置你在中转站获取的API Key
@@ -56,11 +56,11 @@ wire_api = "responses"
 {  "OPENAI_API_KEY": "xxx"}
 ```
 
-![Windows auth.json 中填写 Codex 使用的 OPENAI_API_KEY](/images/tutorial/63.png)
+![Windows auth.json 中填写 Codex 使用的 OPENAI_API_KEY](/images/tutorial/63.webp)
 
 回顾 [创建API令牌](/getting-started/api-token.html) 这一步教程，我们需要在GGUU API 中创建 Codex 分组的令牌，然后点击右侧的复制按钮，将 Key 填入 `xxx` 部分后保存
 
-![GGUU API 控制台中复制 Codex 分组令牌](/images/tutorial/64.png)
+![GGUU API 控制台中复制 Codex 分组令牌](/images/tutorial/64.webp)
 
 1. 测试对话
 
@@ -70,7 +70,7 @@ wire_api = "responses"
 codex
 ```
 
-![Windows 终端运行 Codex 并测试回复](/images/tutorial/65.png)
+![Windows 终端运行 Codex 并测试回复](/images/tutorial/65.webp)
 
 ## Mac OS
 
@@ -80,11 +80,11 @@ codex
 ~/.codex
 ```
 
-![macOS 访达前往文件夹窗口中输入 .codex 配置目录](/images/tutorial/66.png)
+![macOS 访达前往文件夹窗口中输入 .codex 配置目录](/images/tutorial/66.webp)
 
 1. 你的目录中可能会存在以下文件，不过我们用到的文件只有三个，需要配置的只有两个，其它文件可忽略
 
-![macOS 的 Codex 配置目录，显示 config.toml、auth.json 和 AGENTS.md](/images/tutorial/67.png)
+![macOS 的 Codex 配置目录，显示 config.toml、auth.json 和 AGENTS.md](/images/tutorial/67.webp)
 
 - **`config.toml`**：Codex 的核心配置文件，中转服务与 MCP 等都在此文件配置
 - **`auth.json`**：存放中转站获取的 API Key
@@ -124,11 +124,11 @@ wire_api = "responses"
 {  "OPENAI_API_KEY": "xxx"}
 ```
 
-![macOS auth.json 中填写 Codex 使用的 OPENAI_API_KEY](/images/tutorial/68.png)
+![macOS auth.json 中填写 Codex 使用的 OPENAI_API_KEY](/images/tutorial/68.webp)
 
 回顾 [创建API令牌](/getting-started/api-token.html) 这一步教程，我们需要在GGUU API中创建 Codex 分组的令牌，然后点击右侧的复制按钮，将 Key 填入 `xxx` 部分后保存
 
-![GGUU API 控制台中复制 Codex 分组令牌](/images/tutorial/69.png)
+![GGUU API 控制台中复制 Codex 分组令牌](/images/tutorial/69.webp)
 
 1. 测试对话
 
@@ -138,4 +138,4 @@ wire_api = "responses"
 codex
 ```
 
-![macOS 终端运行 Codex 并测试回复](/images/tutorial/70.png)
+![macOS 终端运行 Codex 并测试回复](/images/tutorial/70.webp)

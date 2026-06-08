@@ -15,7 +15,7 @@ Before configuring any CLI tool, complete these steps first:
 
 After signing in to the console, you can view the currently available API information in the lower-left corner of the `Dashboard`.
 
-![Dashboard API section showing the primary and optimized API request addresses](/images/tutorial/15.png)
+![Dashboard API section showing the primary and optimized API request addresses](/images/tutorial/15.webp)
 
 Primary Endpoint: `https://api.gguuai.com`. This is recommended first and is suitable for daily use cases that need better stability.
 

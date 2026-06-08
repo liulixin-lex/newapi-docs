@@ -12,7 +12,7 @@ After signing in, open the console and choose `API Keys` from the left sidebar.
 
 Click `API Keys` in the left sidebar.
 
-![API Keys entry in the left sidebar of the console](/images/tutorial/11.png)
+![API Keys entry in the left sidebar of the console](/images/tutorial/11.webp)
 
 Click `Create API Key` at the top of the page.
 
@@ -20,7 +20,7 @@ Click `Create API Key` at the top of the page.
 
 Fill in the token information in the pop-up window:
 
-![Create API key dialog with name, group, expiration, and quota settings](/images/tutorial/12.png)
+![Create API key dialog with name, group, expiration, and quota settings](/images/tutorial/12.webp)
 
 - Token name: used to distinguish different purposes, such as `Claude Code`, `Codex`, or `Gemini`.
 - Token group: required. The group determines which models this token can use.
@@ -44,12 +44,12 @@ After filling in the form, click `Save changes` in the lower-right corner to fin
 
 You can open `Model Marketplace` to check which models are supported under each token group.
 
-![Model Marketplace page for choosing a token group and viewing available models](/images/tutorial/13.png)
+![Model Marketplace page for choosing a token group and viewing available models](/images/tutorial/13.webp)
 
 1. Click `Model Marketplace` at the top of the page.
 2. Select a group on the left.
 3. The page shows the available models, prices, and group multipliers for that group.
 4. Click `Details` to view the exact group and related information for a model.
 
-![Model details page showing group membership and multiplier information](/images/tutorial/14.png)
+![Model details page showing group membership and multiplier information](/images/tutorial/14.webp)
 

@@ -16,16 +16,16 @@ npm install -g opencode-ai
 
 1. 安装完成后，在终端输入 `opencode` 命令若出现界面，则安装成功
 
-![终端运行 opencode 命令并进入 OpenCode 界面](/images/tutorial/86.png)
+![终端运行 opencode 命令并进入 OpenCode 界面](/images/tutorial/86.webp)
 
 1. 查看 [CC-Switch 软件下载](/integration/cc-switch/download.html) 一节的内容，下载并安装 CC-Switch 到本地，安装并打开软件
 2. 上方配置项选择到 `OpenCode`，然后点击 `添加供应商` 按钮
 
-![CC-Switch 中切换到 OpenCode 分组并添加供应商](/images/tutorial/87.png)
+![CC-Switch 中切换到 OpenCode 分组并添加供应商](/images/tutorial/87.webp)
 
 1. 选择 `自定义配置`
 
-![OpenCode 供应商配置中选择自定义配置](/images/tutorial/88.png)
+![OpenCode 供应商配置中选择自定义配置](/images/tutorial/88.webp)
 
 1. 添加各项配置
 
@@ -35,7 +35,7 @@ npm install -g opencode-ai
 - Codex系列模型：`OpenAI Responses` 或 `OpenAI Compatible`
 - Gemini系列模型：`Google (Gemini)`
 
-![OpenCode 自定义供应商中填写供应商标识和接口格式](/images/tutorial/89.png)
+![OpenCode 自定义供应商中填写供应商标识和接口格式](/images/tutorial/89.webp)
 
 - 在 `API Key` 中填入 [创建API令牌](/getting-started/api-token.html) 一节中你创建的 Key
 - 在 `额外选项` 中配置键值对 `{"setCacheKey":true}`
@@ -44,15 +44,15 @@ npm install -g opencode-ai
 
 **参考配置**
 
-![OpenCode 参考配置中填写 API Key 和额外选项](/images/tutorial/90.png)
+![OpenCode 参考配置中填写 API Key 和额外选项](/images/tutorial/90.webp)
 
 1. 在界面中选择刚配置好的 PackyApi 渠道，点击添加按钮
 
-![OpenCode 界面中选择刚配置的 GGUUAI 渠道并添加](/images/tutorial/91.png)
+![OpenCode 界面中选择刚配置的 GGUUAI 渠道并添加](/images/tutorial/91.webp)
 
 ## 验证配置
 
 1. 重新打开终端，输入 `opencode` 运行
 2. 输入 `/models` 命令，观察刚才配置的 GGUUAI的渠道是否存在，如果存在则配置成功，可以直接使用
 
-![OpenCode 的 /models 输出中显示已配置的 GGUUAI 渠道](/images/tutorial/92.png)
+![OpenCode 的 /models 输出中显示已配置的 GGUUAI 渠道](/images/tutorial/92.webp)

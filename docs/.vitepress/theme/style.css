@@ -448,6 +448,7 @@ input {
 .vp-doc img {
   display: block;
   max-width: min(100%, 860px);
+  height: auto;
   margin: 20px 0 30px;
   padding: 6px;
   border: 1px solid var(--border);
@@ -456,15 +457,26 @@ input {
   box-shadow: var(--elev-raised);
 }
 
+.vp-doc .doc-table-scroll {
+  max-width: 100%;
+  margin: 22px 0 30px;
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface-raised);
+  -webkit-overflow-scrolling: touch;
+}
+
 .vp-doc table {
   display: table;
   width: 100%;
-  margin: 22px 0 30px;
+  min-width: 620px;
+  margin: 0;
   border-collapse: separate;
   border-spacing: 0;
-  overflow: hidden;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
 }
 
 .vp-doc th,
@@ -486,6 +498,7 @@ input {
 }
 
 .vp-doc div[class*='language-'] {
+  max-width: 100%;
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
   background: var(--surface-soft);
@@ -519,12 +532,17 @@ html[lang='en-US'] .vp-doc div[class*='language-']::before {
 .vp-doc div[class*='language-'] pre.vp-code {
   margin: 0;
   padding: 10px 22px 24px 0;
+  overflow-x: auto;
   background: transparent;
   counter-reset: doc-code-line;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
 }
 
 .vp-doc div[class*='language-'] pre.vp-code code {
   display: block;
+  width: max-content;
+  min-width: 100%;
   background: transparent;
 }
 

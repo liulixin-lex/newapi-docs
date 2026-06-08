@@ -16,16 +16,16 @@ npm install -g opencode-ai
 
 2. After installation, enter `opencode` in the terminal. If the interface appears, installation succeeded.
 
-![Terminal running opencode and opening the OpenCode interface](/images/tutorial/86.png)
+![Terminal running opencode and opening the OpenCode interface](/images/tutorial/86.webp)
 
 3. Read [Download CC-Switch](/en/integration/cc-switch/download.html), download and install CC-Switch locally, then open the software.
 4. Select `OpenCode` in the top configuration area, then click `Add provider`.
 
-![CC-Switch OpenCode group with the Add provider button](/images/tutorial/87.png)
+![CC-Switch OpenCode group with the Add provider button](/images/tutorial/87.webp)
 
 5. Choose `Custom configuration`.
 
-![Selecting custom configuration for the OpenCode provider](/images/tutorial/88.png)
+![Selecting custom configuration for the OpenCode provider](/images/tutorial/88.webp)
 
 6. Add the configuration items.
 
@@ -35,7 +35,7 @@ npm install -g opencode-ai
 - Codex models: `OpenAI Responses` or `OpenAI Compatible`
 - Gemini models: `Google (Gemini)`
 
-![OpenCode custom provider form with provider identifier and interface format](/images/tutorial/89.png)
+![OpenCode custom provider form with provider identifier and interface format](/images/tutorial/89.webp)
 
 - In `API Key`, enter the key you created in [Create an API Token](/en/getting-started/api-token.html).
 - In `Extra options`, configure the key-value pair `{"setCacheKey":true}`.
@@ -44,16 +44,16 @@ npm install -g opencode-ai
 
 **Reference configuration**
 
-![OpenCode reference configuration with API key and extra options](/images/tutorial/90.png)
+![OpenCode reference configuration with API key and extra options](/images/tutorial/90.webp)
 
 8. Select the PackyApi channel you just configured in the interface, then click the add button.
 
-![Selecting the configured GGUUAI channel in OpenCode and adding it](/images/tutorial/91.png)
+![Selecting the configured GGUUAI channel in OpenCode and adding it](/images/tutorial/91.webp)
 
 ## Verify the Configuration
 
 1. Reopen the terminal and enter `opencode` to run it.
 2. Enter the `/models` command and check whether the GGUUAI channel you just configured exists. If it exists, setup succeeded and you can use it directly.
 
-![OpenCode /models output showing the configured GGUUAI channel](/images/tutorial/92.png)
+![OpenCode /models output showing the configured GGUUAI channel](/images/tutorial/92.webp)
 

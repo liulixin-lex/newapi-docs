@@ -12,13 +12,13 @@ description: "Claude Code configuration files on Windows and macOS."
 %userprofile%\.claude
 ```
 
-![Windows Run dialog with the .claude configuration directory path](/images/tutorial/51.webp)
+![Windows Run dialog with the .claude configuration directory path](/images/tutorial/manual-claude-01-windows-run-path.webp)
 
 2. The directory should look like the screenshot. If there is no `settings.json` in the directory, manually create a `settings.json` file and open it.
 
 **`settings.json`**: Claude's main configuration file. It is mainly used to configure the relay address, API key, and items such as hooks and plugins.
 
-![Claude Code configuration directory on Windows with the settings.json file](/images/tutorial/52.webp)
+![Claude Code configuration directory on Windows with the settings.json file](/images/tutorial/manual-claude-02-windows-config-dir.webp)
 
 3. Write the following content into `settings.json`:
 
@@ -34,15 +34,15 @@ description: "Claude Code configuration files on Windows and macOS."
 }
 ```
 
-![settings.json with Claude Code relay endpoint and API key configuration](/images/tutorial/53.webp)
+![settings.json with Claude Code relay endpoint and API key configuration](/images/tutorial/manual-claude-03-settings-json.webp)
 
 4. Review [Create an API Token](/en/getting-started/api-token.html), create a token in the Claude group in GGUU API, and replace the `xxx` part above.
 
-![Copying a Claude group token in the GGUU API console](/images/tutorial/54.webp)
+![Copying a Claude group token in the GGUU API console](/images/tutorial/shared-claude-token-console.webp)
 
 5. Run `claude` in Windows Terminal. After the chat interface appears, test a conversation. If you receive a reply, setup succeeded.
 
-![Windows terminal running Claude Code and testing a response](/images/tutorial/55.webp)
+![Windows terminal running Claude Code and testing a response](/images/tutorial/shared-claude-terminal-chat.webp)
 
 ## macOS
 
@@ -52,13 +52,13 @@ description: "Claude Code configuration files on Windows and macOS."
 ~/.claude
 ```
 
-![macOS Go to Folder dialog with the .claude configuration directory path](/images/tutorial/56.webp)
+![macOS Go to Folder dialog with the .claude configuration directory path](/images/tutorial/manual-claude-04-macos-folder-path.webp)
 
 2. If there is no `settings.json` in the directory, create it manually.
 
 **`settings.json`**: Claude's main configuration file. It is mainly used to configure the relay address, API key, and items such as hooks and plugins.
 
-![Claude Code configuration directory on macOS with the settings.json file](/images/tutorial/57.webp)
+![Claude Code configuration directory on macOS with the settings.json file](/images/tutorial/manual-claude-05-macos-config-dir.webp)
 
 3. Write the following content into `settings.json`:
 
@@ -74,13 +74,13 @@ description: "Claude Code configuration files on Windows and macOS."
 }
 ```
 
-![macOS settings.json with Claude Code relay endpoint and API key configuration](/images/tutorial/58.webp)
+![macOS settings.json with Claude Code relay endpoint and API key configuration](/images/tutorial/manual-claude-03-settings-json.webp)
 
 4. Review [Create an API Token](/en/getting-started/api-token.html), create a token in the Claude group in GGUU API, and replace `xxx`.
 
-![Copying a Claude group token in the GGUU API console](/images/tutorial/59.webp)
+![Copying a Claude group token in the GGUU API console](/images/tutorial/shared-claude-token-console.webp)
 
 5. Run `claude` in Terminal. If the chat interface appears and replies normally, setup is complete.
 
-![macOS terminal running Claude Code and testing a response](/images/tutorial/60.webp)
+![macOS terminal running Claude Code and testing a response](/images/tutorial/shared-claude-terminal-chat.webp)
 

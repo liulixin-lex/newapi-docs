@@ -12,6 +12,6 @@ description: "查看令牌分组下支持的模型、价格和分组倍率。"
 3. 左侧分组名后显示的类似x0.1就是该模型的倍率。
 4. 点击“详情”可查看对应模型所属具体分组及其分组对应倍率。
 
-![模型广场中左侧分组列表和右侧可用模型列表](/images/tutorial/16.webp)
+![模型广场中左侧分组列表和右侧可用模型列表](/images/tutorial/model-groups-01-model-list.webp)
 
-![模型详情窗口，显示模型所属分组和分组倍率](/images/tutorial/17.webp)
+![模型详情窗口，显示模型所属分组和分组倍率](/images/tutorial/model-groups-02-model-multipliers.webp)

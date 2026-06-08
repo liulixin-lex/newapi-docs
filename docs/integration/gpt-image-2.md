@@ -125,33 +125,33 @@ curl --location 'https://api.gguuai.com/v1/images/edits' \
 1. 参考 [创建 API 令牌](/getting-started/api-token.html) 章节的教程，创建令牌“生图”分组令牌。
 2. 打开 CherryStudio，点击右上角设置按钮，进入 `模型服务` 页面。
 
-![Cherry Studio 模型服务页面，用于配置 gpt-image-2 图像模型](/images/tutorial/93.webp)
+![Cherry Studio 模型服务页面，用于配置 gpt-image-2 图像模型](/images/tutorial/gpt-image-2-01-model-services.webp)
 
 3. 在模型服务列表底部点击添加，新增一个提供商，可以参考图中填写。
 
-![Cherry Studio 添加图像生成提供商的表单](/images/tutorial/94.webp)
+![Cherry Studio 添加图像生成提供商的表单](/images/tutorial/gpt-image-2-02-add-provider.webp)
 
 4. 进入刚创建的 GGUUAI 提供商，填写 API 配置。
 
 - API 密钥：填写你的生图分组 API key
 - API 地址：`https://api.gguuai.com`
 
-![Cherry Studio 的 GGUUAI 图像提供商 API 配置](/images/tutorial/95.webp)
+![Cherry Studio 的 GGUUAI 图像提供商 API 配置](/images/tutorial/gpt-image-2-03-provider-settings.webp)
 
 5. 点击模型区域右侧的 `获取模型列表`，刷新后添加 `gpt-image-2` 模型。添加完成后，可以在提供商配置页中看到模型列表里已经出现 `gpt-image-2`。
 
-![Cherry Studio 获取模型列表后显示 gpt-image-2](/images/tutorial/96.webp)
+![Cherry Studio 获取模型列表后显示 gpt-image-2](/images/tutorial/gpt-image-2-04-fetch-models.webp)
 
 6. 点击 `gpt-image-2` 右侧的编辑按钮，进入编辑模型窗口，将 `端点类型` 设置为 `图像生成（OpenAI）`，然后点击 `保存`。
 
-![Cherry Studio 中点击 gpt-image-2 的编辑按钮](/images/tutorial/97.webp)
+![Cherry Studio 中点击 gpt-image-2 的编辑按钮](/images/tutorial/gpt-image-2-05-edit-model.webp)
 
-![模型编辑窗口中将端点类型设置为图像生成（OpenAI）并保存](/images/tutorial/98.webp)
+![模型编辑窗口中将端点类型设置为图像生成（OpenAI）并保存](/images/tutorial/gpt-image-2-06-endpoint-type.webp)
 
 7. 回到首页，点击顶部的 `+` 按钮，在应用列表中选择 `绘画`。
 
-![Cherry Studio 首页应用列表中选择绘画功能](/images/tutorial/99.webp)
+![Cherry Studio 首页应用列表中选择绘画功能](/images/tutorial/gpt-image-2-07-painting-app.webp)
 
 8. 进入绘画页面后，左侧 `提供商` 选择刚才添加的供应商，`模型` 选择 `gpt-image-2`，即可输入提示词生图。
 
-![Cherry Studio 绘画页面中选择提供商、gpt-image-2 模型并输入提示词](/images/tutorial/100.webp)
+![Cherry Studio 绘画页面中选择提供商、gpt-image-2 模型并输入提示词](/images/tutorial/gpt-image-2-08-painting-prompt.webp)

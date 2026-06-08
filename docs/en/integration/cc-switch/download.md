@@ -11,11 +11,11 @@ description: "How to install CC-Switch on Windows, macOS, and Linux."
 1. Click the download link, [download portal](https://github.com/farion1231/cc-switch/releases/latest), to open the CC-Switch GitHub Releases page.
 2. Scroll to the bottom and choose the installer package that matches your system. On Windows, the regular `.msi` installer is recommended.
 
-![CC-Switch GitHub Releases page showing downloadable installers](/images/tutorial/18.webp)
+![CC-Switch GitHub Releases page showing downloadable installers](/images/tutorial/cc-switch-download-01-github-releases.webp)
 
 3. After installation, run the CC-Switch main program. The interface looks like this.
 
-![CC-Switch main interface after launch](/images/tutorial/19.webp)
+![CC-Switch main interface after launch](/images/tutorial/cc-switch-download-02-main-ui.webp)
 
 ## Method 2
 
@@ -39,7 +39,7 @@ brew install --cask cc-switch
 
 3. After installation, find CC-Switch in `Launchpad` or the `Applications` folder and start it.
 
-![CC-Switch interface after installing and launching it on macOS](/images/tutorial/20.webp)
+![CC-Switch interface after installing and launching it on macOS](/images/tutorial/cc-switch-download-02-main-ui.webp)
 
 ## Method 2
 

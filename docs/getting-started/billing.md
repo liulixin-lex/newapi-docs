@@ -17,20 +17,20 @@ description: "充值余额与购买额度。"
 1. 在“添加资金”中选择固定额度，或在“自定义额度”中输入要充值的金额。
 2. 确认页面下方的“待支付金额”后，选择支付方式并支付。
 
-![钱包页面中选择充值额度、支付方式和待支付金额](/images/tutorial/6.webp)
+![钱包页面中选择充值额度、支付方式和待支付金额](/images/tutorial/billing-01-wallet-top-up.webp)
 
 ### 方式二：购买兑换码
 
 1. 点击下方“点此获取”即可跳转兑换码购买网站。
 
-![钱包页面中点击获取兑换码入口](/images/tutorial/101.webp)
+![钱包页面中点击获取兑换码入口](/images/tutorial/billing-02-redemption-entry.webp)
 
 2. 选择你希望充值的额度套餐，进行购买。
 
-![兑换码购买页面中选择充值额度套餐](/images/tutorial/102.webp)
+![兑换码购买页面中选择充值额度套餐](/images/tutorial/billing-03-redemption-package.webp)
 
 3. 复制购买的兑换码，回到钱包页面。
 
 4. 粘贴进兑换框，兑换等值额度。
 
-![钱包页面中粘贴兑换码并兑换额度](/images/tutorial/104.webp)
+![钱包页面中粘贴兑换码并兑换额度](/images/tutorial/billing-04-redeem-code.webp)

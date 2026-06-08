@@ -11,7 +11,7 @@ description: "View the models, prices, and group multipliers supported under eac
 3. The value like `x0.1` after the group name on the left is the model multiplier.
 4. Click `Details` to view the exact group a model belongs to and the multiplier for that group.
 
-![Model Marketplace with the group list on the left and available models on the right](/images/tutorial/16.webp)
+![Model Marketplace with the group list on the left and available models on the right](/images/tutorial/model-groups-01-model-list.webp)
 
-![Model details window showing model groups and group multipliers](/images/tutorial/17.webp)
+![Model details window showing model groups and group multipliers](/images/tutorial/model-groups-02-model-multipliers.webp)
 

@@ -6,7 +6,7 @@ description: "Sign-in page, three sign-in methods, and the password reset flow."
 
 Sign-in page: https://api.gguuai.com/sign-in
 
-![Sign-in page showing GitHub, LinuxDO, and email or username login options](/images/tutorial/2.webp)
+![Sign-in page showing GitHub, LinuxDO, and email or username login options](/images/tutorial/account-login-01-sign-in-options.webp)
 
 ## Sign In with GitHub
 
@@ -30,14 +30,14 @@ Sign-in page: https://api.gguuai.com/sign-in
 
 1. If you lost your password, click `Forgot password`.
 
-![Forgot password entry on the sign-in page](/images/tutorial/3.webp)
+![Forgot password entry on the sign-in page](/images/tutorial/account-login-02-forgot-password.webp)
 
 2. The system will send a password reset link to your email address.
 3. After verification, you will receive a temporary sign-in password.
 
-![Password reset page explaining the email reset link and temporary password](/images/tutorial/4.webp)
+![Password reset page explaining the email reset link and temporary password](/images/tutorial/account-login-03-password-reset.webp)
 
 4. After signing in, immediately go to `Profile` in the left sidebar and change your password.
 
-![Profile page where the user can change the account password](/images/tutorial/5.webp)
+![Profile page where the user can change the account password](/images/tutorial/account-login-04-change-password.webp)
 

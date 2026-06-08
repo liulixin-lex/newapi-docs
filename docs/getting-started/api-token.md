@@ -12,7 +12,7 @@ description: "创建 API Key、选择令牌分组并查看分组可用模型。"
 
 在左侧菜单点击“API密钥”。
 
-![控制台左侧菜单中的 API 密钥入口](/images/tutorial/11.webp)
+![控制台左侧菜单中的 API 密钥入口](/images/tutorial/api-token-01-api-keys-menu.webp)
 
 点击页面上方的“创建API密钥”。
 
@@ -20,7 +20,7 @@ description: "创建 API Key、选择令牌分组并查看分组可用模型。"
 
 在弹窗中填写令牌信息：
 
-![创建 API 密钥弹窗，填写名称、分组、过期时间和额度设置](/images/tutorial/12.webp)
+![创建 API 密钥弹窗，填写名称、分组、过期时间和额度设置](/images/tutorial/api-token-02-create-key-dialog.webp)
 
 - 令牌名称：用于区分不同用途，例如 `Claude Code`、`Codex`、`Gemini`。
 - 令牌分组：必须选择，分组决定这个令牌可以使用哪些模型。
@@ -44,11 +44,11 @@ description: "创建 API Key、选择令牌分组并查看分组可用模型。"
 
 你可以在“模型广场”查看每个令牌分组下支持哪些模型。
 
-![模型广场页面，左侧选择令牌分组并查看可用模型](/images/tutorial/13.webp)
+![模型广场页面，左侧选择令牌分组并查看可用模型](/images/tutorial/api-token-03-token-group-models.webp)
 
 1. 点击页面顶部“模型广场”。
 2. 在左侧选择分组。
 3. 页面会显示该分组可用的模型、价格和分组倍率。
 4. 点击“详情”可查看对应模型所属具体分组及其相关信息。
 
-![模型详情页面，查看模型所属分组和倍率信息](/images/tutorial/14.webp)
+![模型详情页面，查看模型所属分组和倍率信息](/images/tutorial/api-token-04-model-details.webp)

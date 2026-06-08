@@ -1,0 +1,21 @@
+node_modules/
+docs/.vitepress/cache/
+docs/.vitepress/dist/
+.cache/
+.temp/
+.tmp/
+.DS_Store
+Thumbs.db
+desktop.ini
+*.log
+*.err.log
+.env
+.env.*
+!.env.example
+
+# Local extraction/runtime artifacts
+Python/
+source-extract/
+.od-skills/
+*.docx
+mq*-image.png

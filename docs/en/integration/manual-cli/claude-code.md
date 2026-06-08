@@ -25,7 +25,7 @@ description: "Claude Code configuration files on Windows and macOS."
 ```json
 {
   "env": {
-    "ANTHROPIC_BASE_URL": "https://api.gguuai.com.com",
+    "ANTHROPIC_BASE_URL": "{{API_BASE_URL}}",
     "ANTHROPIC_AUTH_TOKEN": "xxx",
     "CLAUDE_CODE_ATTRIBUTION_HEADER": "0",
     "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1",
@@ -65,7 +65,7 @@ description: "Claude Code configuration files on Windows and macOS."
 ```json
 {
   "env": {
-    "ANTHROPIC_BASE_URL": "https://api.gguuai.com",
+    "ANTHROPIC_BASE_URL": "{{API_BASE_URL}}",
     "ANTHROPIC_AUTH_TOKEN": "xxx",
     "CLAUDE_CODE_ATTRIBUTION_HEADER": "0",
     "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1",

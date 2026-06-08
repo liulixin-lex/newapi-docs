@@ -32,19 +32,19 @@ description: "Windows 与 macOS 下的 Codex 配置文件。"
 将以下配置文本复制到你的 `config.toml` 文件中保存
 
 ```toml
-disable_response_storage = true  
-model = "gpt-5.5"  
-model_provider = "gguuai"  
-model_reasoning_effort = "xhigh"  
-model_verbosity = "high"  
+disable_response_storage = true
+model = "gpt-5.5"
+model_provider = "gguuai"
+model_reasoning_effort = "xhigh"
+model_verbosity = "high"
 
-[features]  
-web_search_request = true  
+[features]
+web_search_request = true
 
-[model_providers.gguuai]  
-base_url = "https://api.gguuai.com/v1"  
-name = "gguuai"  
-requires_openai_auth = true  
+[model_providers.gguuai]
+base_url = "{{API_V1_BASE_URL}}"
+name = "gguuai"
+requires_openai_auth = true
 wire_api = "responses"
 ```
 
@@ -100,19 +100,19 @@ codex
 将以下内容保存到 `config.toml`
 
 ```toml
-disable_response_storage = true  
-model = "gpt-5.5"  
-model_provider = "gguuai"  
-model_reasoning_effort = "xhigh"  
-model_verbosity = "high"  
+disable_response_storage = true
+model = "gpt-5.5"
+model_provider = "gguuai"
+model_reasoning_effort = "xhigh"
+model_verbosity = "high"
 
-[features]  
-web_search_request = true  
+[features]
+web_search_request = true
 
-[model_providers.gguuai]  
-base_url = "https://api.gguuai.com/v1"  
-name = "gguuai"  
-requires_openai_auth = true  
+[model_providers.gguuai]
+base_url = "{{API_V1_BASE_URL}}"
+name = "gguuai"
+requires_openai_auth = true
 wire_api = "responses"
 ```
 

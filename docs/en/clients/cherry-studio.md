@@ -29,7 +29,7 @@ Cherry Studio is a visual AI client. It is suitable for beginners who do not wan
 3. Open the GGUUAI provider you just created and fill in the API configuration.
 
 - API key: enter your GGUU API key.
-- API address: `https://api.gguuai.com`
+- API address: `{{API_BASE_URL}}`
 
 ![GGUUAI provider API key and API address settings in Cherry Studio](/images/tutorial/cherry-studio-03-provider-settings.webp)
 

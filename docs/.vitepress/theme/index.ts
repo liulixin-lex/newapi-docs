@@ -153,6 +153,14 @@ function addEnglishPrefix(path: string) {
   return `/en${path.startsWith('/') ? path : `/${path}`}`
 }
 
+function stripBasePath(path: string) {
+  const base = (import.meta.env.BASE_URL || '/').replace(/\/+$/, '')
+  if (!base || base === '/') return path
+  if (path === base) return '/'
+  if (path.startsWith(`${base}/`)) return path.slice(base.length) || '/'
+  return path
+}
+
 function routeSuffix() {
   if (typeof window === 'undefined') return ''
   return `${window.location.search}${window.location.hash}`
@@ -195,7 +203,7 @@ const LanguageSwitcher = defineComponent({
     watch(() => route.path, close)
 
     return () => {
-      const currentPath = route.path || '/'
+      const currentPath = stripBasePath(route.path || '/')
       const isEnglish = isEnglishPath(currentPath)
       const chinesePath = stripEnglishPrefix(currentPath)
       const englishPath = addEnglishPrefix(currentPath)

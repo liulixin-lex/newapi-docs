@@ -36,7 +36,7 @@ Whether the request header format is correct: `Authorization: Bearer sk-xxxxx`
 
 **Check**:
 
-Whether the Base URL is correct: `https://api.gguuai.com/v1`
+Whether the Base URL is correct: `{{API_V1_BASE_URL}}`
 
 ::: warning /v1 Path Check
 Do not add or omit `/v1` by mistake.
@@ -44,10 +44,10 @@ Do not add or omit `/v1` by mistake.
 
 ```bash
 # Correct
-base_url = "https://api.gguuai.com/v1"
+base_url = "{{API_V1_BASE_URL}}"
 
 # Wrong: this may become /v1/v1/chat/completions
-base_url = "https://api.gguuai.com/v1/"
+base_url = "{{API_V1_BASE_URL}}/"
 ```
 
 - 429 Too Many Requests: requests are too frequent

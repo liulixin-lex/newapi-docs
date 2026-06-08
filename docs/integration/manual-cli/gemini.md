@@ -21,8 +21,8 @@ description: "Windows 与 macOS 下的 Gemini CLI 配置文件。"
 ![Windows 的 Gemini CLI 配置目录中创建 .env 文件](/images/tutorial/manual-gemini-02-windows-env-file.webp)
 
 ```bash
-GOOGLE_GEMINI_BASE_URL=https://api.gguuai.com  
-GEMINI_API_KEY=xxx  
+GOOGLE_GEMINI_BASE_URL={{API_BASE_URL}}
+GEMINI_API_KEY=xxx
 GEMINI_MODEL=gemini-3.1-pro
 ```
 
@@ -53,8 +53,8 @@ GEMINI_MODEL=gemini-3.1-pro
 ![macOS 的 Gemini CLI 配置目录中创建 .env 文件](/images/tutorial/manual-gemini-05-macos-env-file.webp)
 
 ```bash
-GOOGLE_GEMINI_BASE_URL=https://api.gguuai.com  
-GEMINI_API_KEY=xxx  
+GOOGLE_GEMINI_BASE_URL={{API_BASE_URL}}
+GEMINI_API_KEY=xxx
 GEMINI_MODEL=gemini-3.1-pro
 ```
 

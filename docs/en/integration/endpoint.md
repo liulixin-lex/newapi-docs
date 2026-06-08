@@ -17,17 +17,17 @@ After signing in to the console, you can view the currently available API inform
 
 ![Dashboard API section showing the primary and optimized API request addresses](/images/tutorial/api-endpoint-01-api-addresses.webp)
 
-Primary Endpoint: `https://api.gguuai.com`. This is recommended first and is suitable for daily use cases that need better stability.
+Primary Endpoint: `{{API_BASE_URL}}`. This is recommended first and is suitable for daily use cases that need better stability.
 
-Optimized Endpoint: `https://api.minimax.love`. This optimized route is suitable for latency-sensitive scenarios.
+Optimized Endpoint: `{{OPTIMIZED_API_BASE_URL}}`. This optimized route is suitable for latency-sensitive scenarios.
 
 ::: warning Add /v1 for OpenAI-compatible Endpoints
 
 If you use an OpenAI-compatible client or tool, such as `Codex`, the `OpenAI SDK`, or Cherry Studio's OpenAI-compatible configuration, add `/v1` after the API address:
 
 ```text
-https://api.gguuai.com/v1
-https://api.minimax.love/v1
+{{API_V1_BASE_URL}}
+{{OPTIMIZED_API_V1_BASE_URL}}
 ```
 
 If you use a dedicated configuration such as `Claude Code` or `Gemini CLI`, follow the examples in the corresponding guide.

@@ -36,7 +36,7 @@ Token 是否已被删除或过期
 
 **检查**：
 
-Base URL 是否正确：`https://api.gguuai.com/v1`
+Base URL 是否正确：`{{API_V1_BASE_URL}}`
 
 ::: warning /v1 路径检查
 注意别多写或少写 `/v1`。
@@ -44,10 +44,10 @@ Base URL 是否正确：`https://api.gguuai.com/v1`
 
 ```bash
 # ✅ 正确
-base_url = "https://api.gguuai.com/v1"
+base_url = "{{API_V1_BASE_URL}}"
 
 # ❌ 错误：会变成 /v1/v1/chat/completions
-base_url = "https://api.gguuai.com/v1/"
+base_url = "{{API_V1_BASE_URL}}/"
 ```
 
 - 429 Too Many Requests — 请求太频繁

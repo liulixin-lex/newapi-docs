@@ -4,7 +4,7 @@ description: "注册入口、GitHub、LinuxDO 与邮箱注册方式。"
 ---
 # 注册账号
 
-注册入口：https://api.gguuai.com/sign-up
+注册入口：{{SIGN_UP_URL}}
 
 ![注册页面，显示邮箱注册以及 GitHub 和 LinuxDO 继续注册入口](/images/tutorial/account-register-01-sign-up-options.webp)
 

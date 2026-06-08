@@ -4,7 +4,7 @@ description: "Sign-in page, three sign-in methods, and the password reset flow."
 ---
 # Sign In
 
-Sign-in page: https://api.gguuai.com/sign-in
+Sign-in page: {{SIGN_IN_URL}}
 
 ![Sign-in page showing GitHub, LinuxDO, and email or username login options](/images/tutorial/account-login-01-sign-in-options.webp)
 

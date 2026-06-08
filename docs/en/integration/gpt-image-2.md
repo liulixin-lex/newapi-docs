@@ -8,8 +8,8 @@ OpenAI image-related capabilities are divided into three categories: Responses A
 
 **Images API** is the recommended way to generate images with `gpt-image-2`. It includes two interfaces: text-to-image generation and image editing.
 
-- Text to image: `POST https://api.gguuai.com/v1/images/generations`
-- Image editing / image to image: `POST https://api.gguuai.com/v1/images/edits`
+- Text to image: `POST {{API_V1_BASE_URL}}/images/generations`
+- Image editing / image to image: `POST {{API_V1_BASE_URL}}/images/edits`
 
 Each interface below is explained in the format `API example -> parameter description`. For beginners, first follow the example and pass `model` and `prompt`, then set `n` to `1`. When you need to upload an image, use the `image` field.
 
@@ -18,11 +18,11 @@ Each interface below is explained in the format `API example -> parameter descri
 ### API Example
 
 ```bash
-curl --location 'https://api.gguuai.com/v1/images/generations' \
+curl --location '{{API_V1_BASE_URL}}/images/generations' \
 --header 'Content-Type: application/json' \
 --header 'Authorization: Bearer your image-generation group token' \
 --header 'Accept: */*' \
---header 'Host: api.gguuai.com' \
+--header 'Host: {{API_HOST}}' \
 --header 'Connection: keep-alive' \
 --data '{
     "model": "gpt-image-2",
@@ -58,7 +58,7 @@ curl --location 'https://api.gguuai.com/v1/images/generations' \
 ### API Example
 
 ```bash
-curl --location 'https://api.gguuai.com/v1/images/edits' \
+curl --location '{{API_V1_BASE_URL}}/images/edits' \
 --header 'Authorization: Bearer your image-generation group token' \
 --header 'Accept: */*' \
 --form 'model="gpt-image-2"' \
@@ -134,7 +134,7 @@ curl --location 'https://api.gguuai.com/v1/images/edits' \
 4. Open the GGUUAI provider you just created and fill in the API configuration.
 
 - API key: enter your image-generation group API key.
-- API address: `https://api.gguuai.com`
+- API address: `{{API_BASE_URL}}`
 
 ![GGUUAI image provider API settings in Cherry Studio](/images/tutorial/gpt-image-2-03-provider-settings.webp)
 

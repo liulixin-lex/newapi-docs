@@ -1,12 +1,28 @@
-# GGUU API Docs
+# GGUU API Site
 
-本项目是 GGUU API 中转站教程文档站，使用 VitePress 构建，推荐部署到 Cloudflare Pages。
+本项目是 GGUU API 的统一静态站点，包含官网首页和 VitePress 文档站，推荐部署到 Cloudflare Pages。
 
 ## 技术栈
 
 - VitePress 1.x
+- 静态 HTML 首页
 - Markdown 文档源码
 - Cloudflare Pages
+
+## 站点结构
+
+```text
+/        官网首页
+/docs/   使用文档
+```
+
+核心链接、API 地址和标准链接统一维护在：
+
+```text
+site.config.json
+```
+
+后续需要修改 `baseURL`、登录入口、文档入口或自定义域名时，优先修改这个文件。
 
 ## 本地运行
 
@@ -20,10 +36,16 @@ npm run docs:dev
 构建静态站点：
 
 ```bash
+npm run build
+```
+
+只构建文档站：
+
+```bash
 npm run docs:build
 ```
 
-预览构建后的静态站点：
+预览文档站构建结果：
 
 ```bash
 npm run docs:preview
@@ -42,9 +64,9 @@ http://127.0.0.1:4173/
 Cloudflare Pages 构建设置：
 
 ```text
-Framework preset: VitePress
+Framework preset: None
 Build command: npm run build
-Build output directory: docs/.vitepress/dist
+Build output directory: dist-site
 Root directory: 留空，不要填写 /
 Production branch: main
 ```
@@ -55,14 +77,15 @@ Production branch: main
 NODE_VERSION=22
 ```
 
-Cloudflare Pages 默认部署在站点根路径，不需要额外设置 `BASE_PATH`。
+构建脚本会自动把首页输出到站点根路径，并把 VitePress 文档输出到 `/docs/`。
 
 ## 日常更新流程
 
-后续更新文档时，修改 Markdown 或图片后提交到 GitHub 仓库的 `main` 分支即可。Cloudflare Pages 会自动拉取最新代码、执行构建并发布。
+后续更新首页、文档或 `site.config.json` 后，提交到 GitHub 仓库的 `main` 分支即可。Cloudflare Pages 会自动拉取最新代码、执行构建并发布。
 
 推荐每次提交前先本地运行：
 
 ```bash
-npm run docs:build
+npm test
+npm run build
 ```

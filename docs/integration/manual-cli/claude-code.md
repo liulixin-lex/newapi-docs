@@ -23,14 +23,14 @@ description: "Windows 与 macOS 下的 Claude Code 配置文件。"
 1. 将以下内容写入 `settings.json`
 
 ```json
-{  
-  "env": {  
-    "ANTHROPIC_BASE_URL": "https://api.gguuai.com.com",  
-    "ANTHROPIC_AUTH_TOKEN": "xxx",  
-    "CLAUDE_CODE_ATTRIBUTION_HEADER": "0",  
-    "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1",  
-    "CLAUDE_CODE_DISABLE_TERMINAL_TITLE": "1"  
-  }  
+{
+  "env": {
+    "ANTHROPIC_BASE_URL": "{{API_BASE_URL}}",
+    "ANTHROPIC_AUTH_TOKEN": "xxx",
+    "CLAUDE_CODE_ATTRIBUTION_HEADER": "0",
+    "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1",
+    "CLAUDE_CODE_DISABLE_TERMINAL_TITLE": "1"
+  }
 }
 ```
 
@@ -63,14 +63,14 @@ description: "Windows 与 macOS 下的 Claude Code 配置文件。"
 1. 将以下内容写入 `settings.json`
 
 ```json
-{  
-  "env": {  
-    "ANTHROPIC_BASE_URL": "https://api.gguuai.com",  
-    "ANTHROPIC_AUTH_TOKEN": "xxx",  
-    "CLAUDE_CODE_ATTRIBUTION_HEADER": "0",  
-    "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1",  
-    "CLAUDE_CODE_DISABLE_TERMINAL_TITLE": "1"  
-  }  
+{
+  "env": {
+    "ANTHROPIC_BASE_URL": "{{API_BASE_URL}}",
+    "ANTHROPIC_AUTH_TOKEN": "xxx",
+    "CLAUDE_CODE_ATTRIBUTION_HEADER": "0",
+    "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1",
+    "CLAUDE_CODE_DISABLE_TERMINAL_TITLE": "1"
+  }
 }
 ```
 

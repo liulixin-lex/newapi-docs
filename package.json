@@ -4,10 +4,13 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "vitepress build docs",
+    "build": "node scripts/build-site.mjs",
+    "build:home": "node scripts/render-home.mjs",
+    "build:site": "node scripts/build-site.mjs",
     "docs:dev": "vitepress dev docs --host 127.0.0.1",
     "docs:build": "vitepress build docs",
-    "docs:preview": "vitepress preview docs --host 127.0.0.1"
+    "docs:preview": "vitepress preview docs --host 127.0.0.1",
+    "test": "node --test"
   },
   "devDependencies": {
     "vitepress": "1.6.4"

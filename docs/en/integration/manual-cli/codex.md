@@ -42,7 +42,7 @@ model_verbosity = "high"
 web_search_request = true
 
 [model_providers.gguuai]
-base_url = "https://api.gguuai.com/v1"
+base_url = "{{API_V1_BASE_URL}}"
 name = "gguuai"
 requires_openai_auth = true
 wire_api = "responses"
@@ -110,7 +110,7 @@ model_verbosity = "high"
 web_search_request = true
 
 [model_providers.gguuai]
-base_url = "https://api.gguuai.com/v1"
+base_url = "{{API_V1_BASE_URL}}"
 name = "gguuai"
 requires_openai_auth = true
 wire_api = "responses"

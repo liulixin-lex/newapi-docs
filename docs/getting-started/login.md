@@ -4,7 +4,7 @@ description: "登录入口、三种登录方式与密码重置流程。"
 ---
 # 登录账号
 
-登录入口：https://api.gguuai.com/sign-in
+登录入口：{{SIGN_IN_URL}}
 
 ![登录页面，显示 GitHub、LinuxDO 和邮箱用户名登录入口](/images/tutorial/account-login-01-sign-in-options.webp)
 

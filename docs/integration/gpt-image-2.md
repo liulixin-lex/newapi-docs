@@ -8,8 +8,8 @@ OpenAI 图片相关能力分为 Responses API、Images API、Chat Completions AP
 
 **Images API** 是 `gpt-image-2` 的推荐出图方式，分为文生图和图片编辑两个接口：
 
-- 文生图：`POST https://api.gguuai.com/v1/images/generations`
-- 图片编辑 / 图生图：`POST https://api.gguuai.com/v1/images/edits`
+- 文生图：`POST {{API_V1_BASE_URL}}/images/generations`
+- 图片编辑 / 图生图：`POST {{API_V1_BASE_URL}}/images/edits`
 
 每个接口下面都按“接口实例 → 参数介绍”的格式说明。对新手来说，只要先照着示例传 `model`、`prompt`，并把 `n` 设为 `1`；需要上传图片时再使用 `image` 字段即可。
 
@@ -18,11 +18,11 @@ OpenAI 图片相关能力分为 Responses API、Images API、Chat Completions AP
 ### 接口示例
 
 ```bash
-curl --location 'https://api.gguuai.com/v1/images/generations' \
+curl --location '{{API_V1_BASE_URL}}/images/generations' \
 --header 'Content-Type: application/json' \
 --header 'Authorization: Bearer 你的生图分组令牌' \
 --header 'Accept: */*' \
---header 'Host: api.gguuai.com' \
+--header 'Host: {{API_HOST}}' \
 --header 'Connection: keep-alive' \
 --data '{
     "model": "gpt-image-2",
@@ -58,7 +58,7 @@ curl --location 'https://api.gguuai.com/v1/images/generations' \
 ### 接口实例
 
 ```bash
-curl --location 'https://api.gguuai.com/v1/images/edits' \
+curl --location '{{API_V1_BASE_URL}}/images/edits' \
 --header 'Authorization: Bearer 你的生图分组令牌' \
 --header 'Accept: */*' \
 --form 'model="gpt-image-2"' \
@@ -134,7 +134,7 @@ curl --location 'https://api.gguuai.com/v1/images/edits' \
 4. 进入刚创建的 GGUUAI 提供商，填写 API 配置。
 
 - API 密钥：填写你的生图分组 API key
-- API 地址：`https://api.gguuai.com`
+- API 地址：`{{API_BASE_URL}}`
 
 ![Cherry Studio 的 GGUUAI 图像提供商 API 配置](/images/tutorial/gpt-image-2-03-provider-settings.webp)
 

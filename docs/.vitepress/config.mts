@@ -2,10 +2,13 @@ import { existsSync, readFileSync } from 'node:fs'
 import { dirname, extname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { defineConfig } from 'vitepress'
+import { createTokenMap, loadSiteConfig } from '../../scripts/site-config.mjs'
 
 const base = process.env.BASE_PATH || '/'
 const configDir = dirname(fileURLToPath(import.meta.url))
+const rootDir = join(configDir, '..', '..')
 const publicDir = join(configDir, '..', 'public')
+const siteTokens = createTokenMap(loadSiteConfig(join(rootDir, 'site.config.json')))
 const publicImageSizeCache = new Map<string, { width: number; height: number } | null>()
 
 function readPngSize(filePath: string) {
@@ -119,6 +122,15 @@ function wrapMarkdownTables(md: any) {
 
   md.renderer.rules.table_close = (tokens: any[], index: number, options: any, env: any, self: any) =>
     `${defaultTableClose(tokens, index, options, env, self)}</div>`
+}
+
+function replaceSiteTokens(md: any) {
+  md.core.ruler.before('normalize', 'site_config_tokens', (state: any) => {
+    state.src = state.src.replace(/\{\{([A-Z0-9_]+)\}\}/g, (match: string, key: string) => {
+      if (!(key in siteTokens)) throw new Error(`Unknown site config token in markdown: ${key}`)
+      return siteTokens[key] || match
+    })
+  })
 }
 
 const guideSidebar = [
@@ -288,6 +300,7 @@ export default defineConfig({
   lastUpdated: true,
   markdown: {
     config(md) {
+      replaceSiteTokens(md)
       enhanceMarkdownImages(md)
       wrapMarkdownTables(md)
     }

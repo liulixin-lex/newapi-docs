@@ -1,0 +1,1772 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GGUU AI — 全球大模型统一接口网关</title>
+<meta name="description" content="GGUU AI 提供兼容 OpenAI 与 Anthropic 协议的统一大模型 API 网关，支持 GPT、Claude、Gemini、DeepSeek 等模型接入。">
+<link rel="canonical" href="{{CANONICAL_URL}}">
+<meta property="og:title" content="GGUU AI — 全球大模型统一接口网关">
+<meta property="og:description" content="统一接入主流大模型，集中管理模型调用、权限策略与成本控制。">
+<meta property="og:url" content="{{CANONICAL_URL}}">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="GGUU AI — 全球大模型统一接口网关">
+<meta name="twitter:description" content="统一接入主流大模型，集中管理模型调用、权限策略与成本控制。">
+<meta name="twitter:url" content="{{CANONICAL_URL}}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,600;1,6..96,400;1,6..96,500&family=Manrope:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script>
+(function(){var t=localStorage.getItem('gguuai-theme');if(t)document.documentElement.setAttribute('data-theme',t);else if(window.matchMedia('(prefers-color-scheme:dark)').matches)document.documentElement.setAttribute('data-theme','dark');})();
+</script>
+<style>
+:root {
+  --bg: #faf9f7;
+  --surface: rgba(255,255,255,0.65);
+  --surface-elevated: rgba(255,255,255,0.85);
+  --surface-solid: #ffffff;
+  --fg: #1c1b18;
+  --fg-2: #2f2e2a;
+  --muted: #6b6a64;
+  --meta: #9c9b94;
+  --border: rgba(0,0,0,0.045);
+  --border-strong: rgba(0,0,0,0.08);
+  --border-glass: rgba(255,255,255,0.55);
+  --accent: #b85a3a;
+  --accent-soft: rgba(184,90,58,0.06);
+  --accent-glow: rgba(184,90,58,0.10);
+  --accent-on: #fff;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.025), 0 1px 2px rgba(0,0,0,0.015);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.035), 0 2px 6px rgba(0,0,0,0.02);
+  --shadow-lg: 0 12px 48px rgba(0,0,0,0.05), 0 4px 12px rgba(0,0,0,0.025);
+  --shadow-xl: 0 24px 80px rgba(0,0,0,0.07), 0 8px 24px rgba(0,0,0,0.035);
+  --shadow-glow: 0 0 60px rgba(184,90,58,0.07);
+  --shadow-inner: inset 0 2px 4px rgba(0,0,0,0.05);
+  --glass-blur: blur(24px) saturate(1.4);
+  --glass-blur-heavy: blur(40px) saturate(1.6);
+  --font-display: "Bodoni Moda", "Noto Serif SC", Georgia, serif;
+  --font-heading: "Bodoni Moda", "Noto Serif SC", Georgia, serif;
+  --font-body: "Manrope", -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  --text-xs: 0.75rem; --text-sm: 0.875rem; --text-base: 1rem;
+  --text-lg: 1.25rem; --text-xl: 1.5rem; --text-2xl: 2rem;
+  --text-3xl: 3rem; --text-4xl: clamp(3rem, 6vw, 5rem);
+  --leading-tight: 1.05; --leading-snug: 1.25; --leading-body: 1.65;
+  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px;
+  --space-5: 20px; --space-6: 24px; --space-8: 32px; --space-10: 40px;
+  --space-12: 48px; --space-16: 64px; --space-20: 80px; --space-24: 96px;
+  --radius-sm: 12px; --radius-md: 16px; --radius-lg: 22px;
+  --radius-xl: 32px; --radius-pill: 9999px;
+  --container: 1100px; --gutter: 24px;
+  --newapi-bar-h: 56px;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-smooth: cubic-bezier(0.4, 0, 0, 1);
+  --noise: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.02'/%3E%3C/svg%3E");
+  --theme-dot: var(--accent);
+}
+
+/* ─── THEME: Dark ─── */
+:root[data-theme="dark"] {
+  --bg: #0d0d0c; --surface: rgba(255,255,255,0.035);
+  --surface-elevated: rgba(255,255,255,0.06); --surface-solid: #161614;
+  --fg: #eceae6; --fg-2: #d3d1cc; --muted: #88867f; --meta: #5c5b56;
+  --border: rgba(255,255,255,0.055); --border-strong: rgba(255,255,255,0.09);
+  --border-glass: rgba(255,255,255,0.07);
+  --accent: #d4714e; --accent-soft: rgba(212,113,78,0.08); --accent-glow: rgba(212,113,78,0.13);
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.2); --shadow-md: 0 4px 16px rgba(0,0,0,0.25);
+  --shadow-lg: 0 12px 48px rgba(0,0,0,0.3); --shadow-xl: 0 24px 80px rgba(0,0,0,0.4);
+  --shadow-glow: 0 0 80px rgba(212,113,78,0.1); --shadow-inner: inset 0 2px 4px rgba(0,0,0,0.3);
+}
+
+/* ─── THEME: Ocean ─── */
+:root[data-theme="ocean"] {
+  --bg: #f4f7fa; --surface: rgba(255,255,255,0.6);
+  --surface-elevated: rgba(255,255,255,0.82); --surface-solid: #ffffff;
+  --fg: #151b24; --fg-2: #252d38; --muted: #5a6577; --meta: #8d96a4;
+  --border: rgba(30,60,100,0.05); --border-strong: rgba(30,60,100,0.09);
+  --border-glass: rgba(255,255,255,0.55);
+  --accent: #2d6cb4; --accent-soft: rgba(45,108,180,0.06); --accent-glow: rgba(45,108,180,0.10);
+  --shadow-sm: 0 1px 3px rgba(20,50,90,0.03); --shadow-md: 0 4px 16px rgba(20,50,90,0.04);
+  --shadow-lg: 0 12px 48px rgba(20,50,90,0.06); --shadow-xl: 0 24px 80px rgba(20,50,90,0.08);
+  --shadow-glow: 0 0 60px rgba(45,108,180,0.08); --shadow-inner: inset 0 2px 4px rgba(20,50,90,0.06);
+  --theme-dot: #2d6cb4;
+}
+
+/* ─── THEME: Forest ─── */
+:root[data-theme="forest"] {
+  --bg: #f5f8f5; --surface: rgba(255,255,255,0.6);
+  --surface-elevated: rgba(255,255,255,0.82); --surface-solid: #ffffff;
+  --fg: #161e18; --fg-2: #263029; --muted: #546358; --meta: #8a9a8f;
+  --border: rgba(30,80,50,0.05); --border-strong: rgba(30,80,50,0.09);
+  --border-glass: rgba(255,255,255,0.55);
+  --accent: #3a7d5c; --accent-soft: rgba(58,125,92,0.06); --accent-glow: rgba(58,125,92,0.10);
+  --shadow-sm: 0 1px 3px rgba(20,60,40,0.03); --shadow-md: 0 4px 16px rgba(20,60,40,0.04);
+  --shadow-lg: 0 12px 48px rgba(20,60,40,0.06); --shadow-xl: 0 24px 80px rgba(20,60,40,0.08);
+  --shadow-glow: 0 0 60px rgba(58,125,92,0.08); --shadow-inner: inset 0 2px 4px rgba(20,60,40,0.06);
+  --theme-dot: #3a7d5c;
+}
+
+/* ─── THEME: Dusk (purple) ─── */
+:root[data-theme="dusk"] {
+  --bg: #f7f5fa; --surface: rgba(255,255,255,0.6);
+  --surface-elevated: rgba(255,255,255,0.82); --surface-solid: #ffffff;
+  --fg: #1a1620; --fg-2: #2c2636; --muted: #635a72; --meta: #9690a2;
+  --border: rgba(60,30,100,0.05); --border-strong: rgba(60,30,100,0.09);
+  --border-glass: rgba(255,255,255,0.55);
+  --accent: #6b52a3; --accent-soft: rgba(107,82,163,0.06); --accent-glow: rgba(107,82,163,0.10);
+  --shadow-sm: 0 1px 3px rgba(50,20,80,0.03); --shadow-md: 0 4px 16px rgba(50,20,80,0.04);
+  --shadow-lg: 0 12px 48px rgba(50,20,80,0.06); --shadow-xl: 0 24px 80px rgba(50,20,80,0.08);
+  --shadow-glow: 0 0 60px rgba(107,82,163,0.08); --shadow-inner: inset 0 2px 4px rgba(50,20,80,0.06);
+  --theme-dot: #6b52a3;
+}
+
+/* ─── THEME: Ember (warm gold) ─── */
+:root[data-theme="ember"] {
+  --bg: #faf8f4; --surface: rgba(255,255,255,0.6);
+  --surface-elevated: rgba(255,255,255,0.82); --surface-solid: #ffffff;
+  --fg: #1e1a14; --fg-2: #332d24; --muted: #6e6352; --meta: #a09580;
+  --border: rgba(100,70,20,0.05); --border-strong: rgba(100,70,20,0.09);
+  --border-glass: rgba(255,255,255,0.55);
+  --accent: #b8860b; --accent-soft: rgba(184,134,11,0.06); --accent-glow: rgba(184,134,11,0.10);
+  --shadow-sm: 0 1px 3px rgba(80,60,10,0.03); --shadow-md: 0 4px 16px rgba(80,60,10,0.04);
+  --shadow-lg: 0 12px 48px rgba(80,60,10,0.06); --shadow-xl: 0 24px 80px rgba(80,60,10,0.08);
+  --shadow-glow: 0 0 60px rgba(184,134,11,0.08); --shadow-inner: inset 0 2px 4px rgba(80,60,10,0.06);
+  --theme-dot: #b8860b;
+}
+
+/* ─── THEME: Midnight (deep dark blue) ─── */
+:root[data-theme="midnight"] {
+  --bg: #0a0e16; --surface: rgba(100,140,200,0.04);
+  --surface-elevated: rgba(100,140,200,0.07); --surface-solid: #111825;
+  --fg: #e4e8f0; --fg-2: #c8cdd8; --muted: #7a8494; --meta: #4e5768;
+  --border: rgba(100,150,220,0.07); --border-strong: rgba(100,150,220,0.12);
+  --border-glass: rgba(100,150,220,0.08);
+  --accent: #5b9cf5; --accent-soft: rgba(91,156,245,0.08); --accent-glow: rgba(91,156,245,0.12);
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.3); --shadow-md: 0 4px 16px rgba(0,0,0,0.35);
+  --shadow-lg: 0 12px 48px rgba(0,0,0,0.4); --shadow-xl: 0 24px 80px rgba(0,0,0,0.5);
+  --shadow-glow: 0 0 80px rgba(91,156,245,0.1); --shadow-inner: inset 0 2px 4px rgba(0,0,0,0.4);
+  --theme-dot: #5b9cf5;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --bg: #0d0d0c; --surface: rgba(255,255,255,0.035);
+    --surface-elevated: rgba(255,255,255,0.06); --surface-solid: #161614;
+    --fg: #eceae6; --fg-2: #d3d1cc; --muted: #88867f; --meta: #5c5b56;
+    --border: rgba(255,255,255,0.055); --border-strong: rgba(255,255,255,0.09);
+    --border-glass: rgba(255,255,255,0.07);
+    --accent: #d4714e; --accent-soft: rgba(212,113,78,0.08); --accent-glow: rgba(212,113,78,0.13);
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.2); --shadow-md: 0 4px 16px rgba(0,0,0,0.25);
+    --shadow-lg: 0 12px 48px rgba(0,0,0,0.3); --shadow-xl: 0 24px 80px rgba(0,0,0,0.4);
+    --shadow-glow: 0 0 80px rgba(212,113,78,0.1); --shadow-inner: inset 0 2px 4px rgba(0,0,0,0.3);
+  }
+}
+
+/* ─── RESET ─── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; overflow-x: hidden; }
+body { font-family: var(--font-body); font-size: var(--text-base); line-height: var(--leading-body); color: var(--fg); background: var(--bg); -webkit-font-smoothing: antialiased; font-kerning: normal; font-optical-sizing: auto; text-wrap: pretty; padding-top: var(--newapi-bar-h, 56px); }
+body::after { content: ''; position: fixed; inset: 0; z-index: 0; background-image: var(--noise); background-repeat: repeat; pointer-events: none; }
+a { color: inherit; text-decoration: none; }
+
+/* ─── FLUID BACKGROUND ─── */
+.fluid-bg { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; transition: opacity 0.6s ease; }
+.fluid-bg .orb { position: absolute; border-radius: 50%; filter: blur(100px); opacity: 0.45; transition: background 0.8s ease; }
+.fluid-bg .orb-1 { width: 700px; height: 700px; top: -15%; left: -8%; background: var(--accent-glow); animation: orb-a 28s ease-in-out infinite alternate; }
+.fluid-bg .orb-2 { width: 550px; height: 550px; bottom: 5%; right: -12%; background: rgba(80,120,180,0.035); animation: orb-b 32s ease-in-out infinite alternate; }
+.fluid-bg .orb-3 { width: 450px; height: 450px; top: 45%; left: 55%; background: rgba(140,100,60,0.025); animation: orb-c 26s ease-in-out infinite alternate; }
+@keyframes orb-a { 0%{transform:translate(0,0) scale(1)} 50%{transform:translate(40px,-30px) scale(1.06)} 100%{transform:translate(-10px,10px) scale(1.01)} }
+@keyframes orb-b { 0%{transform:translate(0,0) scale(1)} 50%{transform:translate(-30px,40px) scale(0.94)} 100%{transform:translate(20px,-20px) scale(1.03)} }
+@keyframes orb-c { 0%{transform:translate(0,0) scale(1)} 50%{transform:translate(20px,30px) scale(1.05)} 100%{transform:translate(-15px,-10px) scale(0.97)} }
+
+/* ─── CURSOR — immediate ring tracking ─── */
+.cursor-blob {
+  position: fixed; left: 0; top: 0; z-index: 9999; pointer-events: none;
+  width: 30px; height: 30px; border-radius: 50%;
+  border: 1.5px solid var(--accent); opacity: 0;
+  transition: opacity 0.08s linear, background 0.08s linear,
+              border-color 0.08s linear, box-shadow 0.08s linear;
+  transform: translate3d(-100px, -100px, 0) translate(-50%, -50%);
+  will-change: transform, opacity;
+  background: transparent;
+}
+.cursor-blob.active { opacity: 0.82; }
+.cursor-blob.hover-card { width: 76px; height: 76px; opacity: 0.24; border-radius: 22%; background: var(--accent-soft); border-color: transparent; box-shadow: 0 0 18px var(--accent-glow); }
+.cursor-blob.hover-btn { width: 46px; height: 46px; opacity: 0.42; background: var(--accent-glow); border-color: var(--accent); box-shadow: 0 0 14px var(--accent-glow); }
+.cursor-blob.hover-code { width: 14px; height: 22px; opacity: 0.9; border-radius: 2px; background: var(--accent); border-color: var(--accent); animation: cursor-blink 1s step-end infinite; }
+@keyframes cursor-blink { 50% { opacity: 0.3; } }
+.cursor-blob.hover-text {
+  width: 50px; height: 50px; opacity: 0.3;
+  border-color: color-mix(in oklab, var(--accent), transparent 40%);
+  background: color-mix(in oklab, var(--accent), transparent 94%);
+  box-shadow: none;
+  transition: opacity 0.08s linear, background 0.08s linear,
+              border-color 0.08s linear, box-shadow 0.08s linear;
+}
+.cursor-glow {
+  position: fixed; left: 0; top: 0; z-index: 9998; pointer-events: none;
+  width: 180px; height: 180px; border-radius: 50%;
+  background: radial-gradient(circle, color-mix(in oklab, var(--accent), transparent 96%) 0%, color-mix(in oklab, var(--accent), transparent 99%) 36%, transparent 50%);
+  transform: translate3d(-100px, -100px, 0) translate(-50%, -50%);
+  opacity: 0; transition: opacity 0.08s linear;
+  will-change: transform, opacity;
+  mix-blend-mode: normal;
+}
+.cursor-glow.active { opacity: 0.12; }
+
+/* ─── LAYOUT ─── */
+.container { max-width: var(--container); margin: 0 auto; padding: 0 var(--gutter); position: relative; z-index: 1; }
+section { padding: var(--space-24) 0; position: relative; z-index: 1; }
+
+/* ─── TYPOGRAPHY ─── */
+.display { font-family: var(--font-display); font-size: var(--text-4xl); font-weight: 500; line-height: var(--leading-tight); letter-spacing: -0.02em; font-optical-sizing: auto; text-wrap: balance; }
+.heading { font-family: var(--font-heading); font-size: clamp(1.5rem, 3.5vw, var(--text-3xl)); font-weight: 500; line-height: 1.2; letter-spacing: -0.015em; font-style: italic; font-optical-sizing: auto; text-wrap: balance; }
+.lead { font-size: var(--text-lg); color: var(--muted); line-height: var(--leading-body); font-weight: 400; letter-spacing: 0.005em; max-width: 65ch; }
+.eyebrow { font-family: var(--font-mono); font-size: var(--text-base); text-transform: uppercase; letter-spacing: 0.06em; color: var(--accent); font-weight: 600; transition: color 0.4s ease; }
+.section-header { text-align: center; margin-bottom: var(--space-16); }
+.section-header .heading { margin-top: var(--space-3); }
+.section-header .lead { margin-inline: auto; }
+
+/* ─── FLOATING CONTROLS (replaces fixed nav — newapi provides the top bar) ─── */
+.floating-controls {
+  position: fixed; bottom: var(--space-6); right: var(--space-6);
+  z-index: 900; display: flex; align-items: center; gap: var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  background: var(--surface-elevated); border: 1px solid var(--border-strong);
+  border-radius: var(--radius-pill); backdrop-filter: var(--glass-blur-heavy);
+  -webkit-backdrop-filter: var(--glass-blur-heavy);
+  box-shadow: var(--shadow-lg), inset 0 1px 0 var(--border-glass);
+  transition: transform 0.4s var(--ease-spring), box-shadow 0.4s ease;
+}
+.floating-controls:hover { transform: translateY(-2px); box-shadow: var(--shadow-xl), inset 0 1px 0 var(--border-glass); }
+.fc-lang-btn {
+  font-family: var(--font-body); font-size: 0.75rem; font-weight: 500;
+  color: var(--muted); background: none; border: none; cursor: pointer;
+  padding: 10px 14px; border-radius: var(--radius-sm);
+  min-height: 44px; min-width: 44px; display: inline-flex; align-items: center; justify-content: center;
+  transition: color 0.3s ease, background 0.3s ease;
+}
+.fc-lang-btn:hover { color: var(--fg); background: var(--surface); }
+.fc-divider { width: 1px; height: 16px; background: var(--border-strong); opacity: 0.5; }
+
+/* ─── THEME SWITCHER ─── */
+.theme-switcher {
+  position: relative; display: flex; align-items: center;
+}
+.theme-switcher-btn {
+  width: 36px; height: 36px; border-radius: 50%; border: 2px solid var(--border-strong);
+  background: var(--accent); cursor: pointer; position: relative;
+  transition: transform 0.3s var(--ease-spring), box-shadow 0.3s ease, border-color 0.3s ease;
+  box-shadow: 0 0 0 0 var(--accent-glow);
+}
+.theme-switcher-btn:hover { transform: scale(1.15); box-shadow: 0 0 12px var(--accent-glow); border-color: var(--accent); }
+.theme-switcher-btn:active { transform: scale(0.9); }
+
+.theme-panel {
+  position: absolute; bottom: calc(100% + 14px); right: -8px;
+  background: var(--surface-solid); border: 1px solid var(--border-strong);
+  border-radius: var(--radius-lg); padding: var(--space-5) var(--space-5) var(--space-4);
+  box-shadow: var(--shadow-xl), 0 0 0 1px var(--border);
+  backdrop-filter: var(--glass-blur-heavy); -webkit-backdrop-filter: var(--glass-blur-heavy);
+  opacity: 0; visibility: hidden;
+  transform: translateY(6px) scale(0.92) rotate(2deg);
+  transform-origin: bottom right;
+  transition: opacity 0.35s var(--ease-out), visibility 0.35s, transform 0.5s var(--ease-spring);
+  z-index: 1000; min-width: 200px;
+}
+.theme-panel::before {
+  content: ''; position: absolute; bottom: -18px; left: 0; right: 0; height: 20px;
+}
+.theme-panel.open {
+  opacity: 1; visibility: visible;
+  transform: translateY(0) scale(1) rotate(0deg);
+}
+.theme-panel.closing {
+  opacity: 0;
+  transform: translateY(4px) scale(0.95) rotate(-1deg);
+  transition: opacity 0.25s ease, visibility 0.25s, transform 0.3s var(--ease-smooth);
+}
+.theme-panel-title { font-size: 0.6875rem; font-weight: 500; color: var(--meta); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: var(--space-4); font-family: var(--font-mono); }
+.theme-options { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.theme-option-wrap {
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  opacity: 0; transform: translateY(8px) scale(0.7);
+  transition: opacity 0.3s var(--ease-out), transform 0.4s var(--ease-spring);
+}
+.theme-panel.open .theme-option-wrap {
+  opacity: 1; transform: translateY(0) scale(1);
+}
+.theme-panel.open .theme-option-wrap:nth-child(1) { transition-delay: 0.03s; }
+.theme-panel.open .theme-option-wrap:nth-child(2) { transition-delay: 0.06s; }
+.theme-panel.open .theme-option-wrap:nth-child(3) { transition-delay: 0.09s; }
+.theme-panel.open .theme-option-wrap:nth-child(4) { transition-delay: 0.12s; }
+.theme-panel.open .theme-option-wrap:nth-child(5) { transition-delay: 0.15s; }
+.theme-panel.open .theme-option-wrap:nth-child(6) { transition-delay: 0.18s; }
+.theme-panel.open .theme-option-wrap:nth-child(7) { transition-delay: 0.21s; }
+.theme-panel.closing .theme-option-wrap {
+  opacity: 0; transform: translateY(4px) scale(0.85);
+  transition-delay: 0s !important;
+  transition-duration: 0.15s;
+}
+.theme-option {
+  width: 34px; height: 34px; border-radius: 50%; border: 2.5px solid var(--border);
+  cursor: pointer; position: relative;
+  transition: transform 0.35s var(--ease-spring), border-color 0.3s ease, box-shadow 0.4s ease;
+}
+.theme-option:hover { transform: scale(1.22); border-color: var(--fg); }
+.theme-option:active { transform: scale(0.9); }
+.theme-option.active {
+  border-color: var(--fg);
+  box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--fg);
+  animation: theme-selected-pulse 0.6s var(--ease-spring);
+}
+@keyframes theme-selected-pulse {
+  0% { transform: scale(0.85); box-shadow: 0 0 0 0px var(--bg), 0 0 0 0px var(--fg); }
+  50% { transform: scale(1.15); }
+  100% { transform: scale(1); box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--fg); }
+}
+.theme-option::after { content: ''; position: absolute; inset: 3px; border-radius: 50%; background: inherit; }
+.theme-option[data-t="light"] { background: #b85a3a; }
+.theme-option[data-t="dark"] {
+  background: radial-gradient(circle at 65% 35%, #d4714e 18%, #2a2a26 18%, #2a2a26 50%, #1a1a18 100%);
+  box-shadow: inset 0 0 6px rgba(212,113,78,0.3);
+}
+.theme-option[data-t="dark"]:hover { box-shadow: 0 0 14px rgba(212,113,78,0.35); }
+.theme-option[data-t="ocean"] { background: #2d6cb4; }
+.theme-option[data-t="forest"] { background: #3a7d5c; }
+.theme-option[data-t="dusk"] { background: #6b52a3; }
+.theme-option[data-t="ember"] { background: #b8860b; }
+.theme-option[data-t="midnight"] {
+  background: radial-gradient(circle at 60% 40%, #5b9cf5 20%, #162040 20%, #162040 55%, #0a0e16 100%);
+  box-shadow: inset 0 0 6px rgba(91,156,245,0.35);
+}
+.theme-option[data-t="midnight"]:hover { box-shadow: 0 0 14px rgba(91,156,245,0.4); }
+.theme-option-label { font-size: 0.5625rem; text-align: center; color: var(--meta); font-weight: 500; white-space: nowrap; transition: color 0.2s ease; }
+.theme-option:hover + .theme-option-label,
+.theme-option-wrap:hover .theme-option-label { color: var(--fg); }
+
+/* ─── THEME TRANSITION: View Transition API + color interpolation fallback ─── */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.45s;
+  animation-timing-function: cubic-bezier(0.4, 0, 0, 1);
+}
+::view-transition-old(root) {
+  animation-name: vt-fade-out;
+}
+::view-transition-new(root) {
+  animation-name: vt-fade-in;
+}
+@keyframes vt-fade-out {
+  from { opacity: 1; filter: blur(0); }
+  to   { opacity: 0; filter: blur(2px); }
+}
+@keyframes vt-fade-in {
+  from { opacity: 0; filter: blur(2px); }
+  to   { opacity: 1; filter: blur(0); }
+}
+
+/* Fallback for browsers without View Transition API */
+html.theme-shifting,
+html.theme-shifting *,
+html.theme-shifting *::before,
+html.theme-shifting *::after {
+  transition:
+    background-color 0.45s cubic-bezier(0.4, 0, 0, 1),
+    color 0.35s cubic-bezier(0.4, 0, 0, 1),
+    border-color 0.4s cubic-bezier(0.4, 0, 0, 1),
+    box-shadow 0.45s cubic-bezier(0.4, 0, 0, 1),
+    fill 0.35s cubic-bezier(0.4, 0, 0, 1),
+    stroke 0.35s cubic-bezier(0.4, 0, 0, 1) !important;
+}
+html.theme-shifting .fluid-bg .orb {
+  transition: background 0.7s ease !important;
+}
+
+/* ─── BUTTONS ─── */
+.btn {
+  display: inline-flex; align-items: center; gap: var(--space-2);
+  padding: 14px 28px; border-radius: var(--radius-sm); border: none;
+  font-family: var(--font-body); font-size: var(--text-sm); font-weight: 500;
+  cursor: pointer; text-decoration: none; position: relative; letter-spacing: 0.01em;
+  transition: transform 0.4s var(--ease-spring), box-shadow 0.4s var(--ease-out), background 0.3s ease;
+  overflow: hidden;
+}
+.btn::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(circle at var(--btn-x, 50%) var(--btn-y, 50%), rgba(255,255,255,0.18) 0%, transparent 50%);
+  opacity: 0; transition: opacity 0.3s ease;
+}
+.btn:hover::before { opacity: 1; }
+.btn:hover { transform: translateY(-3px) scale(1.02) rotate(-0.3deg); }
+.btn:active { transform: translateY(1px) scale(0.96) rotate(0deg); transition-duration: 0.1s; }
+.btn-primary {
+  background: var(--accent); color: var(--accent-on);
+  box-shadow: var(--shadow-md), 0 4px 20px var(--accent-glow);
+  border: 1px solid rgba(255,255,255,0.12);
+  transition: transform 0.4s var(--ease-spring), box-shadow 0.4s var(--ease-out), background 0.4s ease, border-color 0.4s ease;
+}
+.btn-primary:hover { box-shadow: var(--shadow-lg), 0 12px 48px var(--accent-glow), var(--shadow-glow); }
+.btn-primary:active { box-shadow: var(--shadow-inner), 0 2px 8px var(--accent-glow); }
+.btn-secondary {
+  background: var(--surface-elevated); color: var(--fg-2);
+  border: 1px solid var(--border-strong);
+  backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
+  box-shadow: var(--shadow-sm), inset 0 1px 0 var(--border-glass);
+}
+.btn-secondary:hover { background: var(--surface-solid); box-shadow: var(--shadow-lg), inset 0 1px 0 var(--border-glass); }
+.btn-secondary:active { box-shadow: var(--shadow-inner); }
+
+/* ─── FOCUS VISIBLE ─── */
+.btn:focus-visible, .code-tab:focus-visible, .fc-lang-btn:focus-visible, .copy-btn:focus-visible, .copy-code-btn:focus-visible, .theme-switcher-btn:focus-visible, .theme-option:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* ─── HERO ─── */
+/* ─── Brand Overline ─── */
+.brand-overline { display: inline-flex; align-items: baseline; gap: 0.35em; margin-bottom: var(--space-6); opacity: 0; transform: translateY(-8px); animation: brand-enter 0.8s var(--ease-out) 0.1s forwards; position: relative; cursor: default; }
+.brand-overline-text { font-family: var(--font-display); font-size: 1.1rem; font-weight: 500; font-style: italic; letter-spacing: 0.15em; color: var(--fg-2); transition: letter-spacing 0.5s var(--ease-out); }
+.brand-overline-suffix { font-family: var(--font-body); font-size: 0.78rem; font-weight: 600; color: var(--accent); letter-spacing: 0.06em; vertical-align: 0.08em; transition: color 0.4s ease; }
+.brand-overline::after { content: ''; position: absolute; bottom: -6px; left: 0; width: 0; height: 1.5px; background: var(--accent); border-radius: 1px; animation: brand-line-expand 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards; }
+.brand-overline:hover .brand-overline-text { letter-spacing: 0.18em; }
+.brand-overline:hover::after { background: color-mix(in oklab, var(--accent), var(--fg) 20%); }
+@keyframes brand-enter { to { opacity: 1; transform: translateY(0); } }
+@keyframes brand-line-expand { to { width: 100%; } }
+
+.hero { padding: 80px 0 var(--space-24); text-align: center; position: relative; min-height: 92vh; display: flex; align-items: center; justify-content: center; }
+.hero::before { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 900px; height: 900px; border-radius: 50%; background: radial-gradient(circle, var(--accent-glow) 0%, transparent 55%); opacity: 0.45; pointer-events: none; animation: hero-breathe 8s ease-in-out infinite; transition: background 0.8s ease; }
+@keyframes hero-breathe { 0%,100%{transform:translate(-50%,-50%) scale(1);opacity:0.35} 50%{transform:translate(-50%,-50%) scale(1.08);opacity:0.55} }
+.hero-content { position: relative; z-index: 2; }
+.hero-rotating { display: inline-block; color: var(--accent); position: relative; min-width: 280px; font-style: normal; transition: color 0.4s ease; }
+.hero-tagline {
+  font-family: var(--font-display); font-size: clamp(1.35rem, 2.5vw, 1.75rem);
+  font-weight: 400; font-style: italic; color: var(--fg-2);
+  letter-spacing: -0.01em; line-height: 1.3;
+  margin-top: var(--space-5); opacity: 0.88;
+}
+.hero-desc {
+  max-width: 520px; margin: var(--space-8) auto 0;
+  display: flex; flex-direction: column; gap: var(--space-3); align-items: center;
+}
+.hero-desc-main {
+  font-size: var(--text-base); color: var(--muted); line-height: var(--leading-body);
+  font-weight: 400; letter-spacing: 0.005em;
+}
+.hero-desc-detail {
+  font-family: var(--font-mono); font-size: var(--text-sm); color: var(--meta);
+  letter-spacing: 0.01em; line-height: 1.5;
+}
+.hero-desc-detail span { display: inline; }
+.hero-desc-detail .sep { margin: 0 0.6em; opacity: 0.4; }
+.hero-actions { display: flex; justify-content: center; gap: var(--space-4); margin-top: var(--space-10); flex-wrap: wrap; }
+.baseurl-hint {
+  margin-top: var(--space-8); font-family: var(--font-body); font-size: var(--text-sm);
+  color: var(--muted); letter-spacing: 0.01em; text-align: center;
+}
+.baseurl-pill {
+  display: inline-flex; align-items: center; gap: var(--space-3);
+  margin-top: var(--space-3); padding: var(--space-2) var(--space-3) var(--space-2) var(--space-6);
+  background: var(--surface-elevated); border: 1px solid var(--border-strong);
+  border-radius: var(--radius-pill); font-family: var(--font-mono); font-size: 0.8125rem;
+  color: var(--muted); backdrop-filter: var(--glass-blur);
+  box-shadow: var(--shadow-md), inset 0 1px 0 var(--border-glass);
+  transition: all 0.4s var(--ease-out);
+}
+.baseurl-pill:hover { border-color: color-mix(in oklab, var(--accent), transparent 50%); box-shadow: var(--shadow-lg), 0 0 0 3px var(--accent-soft); transform: translateY(-2px); }
+.baseurl-pill code { color: var(--fg); font-weight: 500; }
+.baseurl-pill .copy-btn {
+  background: var(--fg); color: var(--bg); border: none;
+  padding: 7px 16px; border-radius: var(--radius-pill);
+  font-size: 0.6875rem; font-weight: 600; cursor: pointer; font-family: var(--font-body);
+  transition: all 0.3s var(--ease-spring); box-shadow: var(--shadow-sm);
+  min-width: 52px; text-align: center;
+}
+.baseurl-pill .copy-btn:hover { transform: scale(1.08); box-shadow: var(--shadow-md); }
+.baseurl-pill .copy-btn:active { transform: scale(0.92); }
+.baseurl-pill .copy-btn.copied { background: #17a34a; color: #fff; animation: copy-pop 0.5s var(--ease-spring); }
+@keyframes copy-pop { 0%{transform:scale(0.8)} 40%{transform:scale(1.15)} 100%{transform:scale(1)} }
+
+/* ─── FEATURE CARDS — Geometric constellation layout ─── */
+.features-constellation {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: var(--space-5);
+  perspective: 1200px;
+}
+
+.feature-card {
+  position: relative;
+  background: var(--surface-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-8) var(--space-6);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  box-shadow: var(--shadow-sm), inset 0 1px 0 var(--border-glass);
+  overflow: hidden;
+  aspect-ratio: 1.618 / 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transition: transform 0.6s var(--ease-out), box-shadow 0.5s var(--ease-out),
+              border-color 0.4s ease, z-index 0s, background 0.5s ease;
+  transform-style: preserve-3d;
+}
+.feature-card::before {
+  content: ''; position: absolute; inset: 0; border-radius: inherit;
+  background: radial-gradient(ellipse at var(--mx, 50%) var(--my, 50%), var(--accent-soft) 0%, transparent 55%);
+  opacity: 0; transition: opacity 0.5s ease; pointer-events: none;
+}
+.feature-card::after {
+  content: ''; position: absolute; top: 0; left: 10%; right: 10%; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border-glass), transparent); opacity: 0.7;
+}
+.feature-card:hover {
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-xl), var(--shadow-glow);
+  z-index: 10;
+}
+.feature-card:hover::before { opacity: 1; }
+
+.fc-1 { --hover-z-tilt: -3deg; }
+.fc-2 { --hover-z-tilt: 2.5deg; }
+.fc-3 { --hover-z-tilt: 3deg; }
+.fc-4 { --hover-z-tilt: -2deg; }
+.fc-5 { --hover-z-tilt: 2.8deg; }
+.fc-6 { --hover-z-tilt: -1.5deg; }
+.feature-card.revealed { transform: none; }
+
+.feature-card-icon {
+  width: 42px; height: 42px; border-radius: var(--radius-md);
+  background: var(--accent-soft); border: 1px solid color-mix(in oklab, var(--accent), transparent 85%);
+  display: grid; place-items: center; margin-bottom: var(--space-5);
+  color: var(--accent); box-shadow: var(--shadow-sm);
+  transition: background 0.4s ease, border-color 0.4s ease, color 0.4s ease;
+}
+.feature-card h3 { font-family: var(--font-body); font-size: var(--text-base); font-weight: 600; margin-bottom: var(--space-2); letter-spacing: -0.01em; }
+.feature-card p { color: var(--muted); font-size: var(--text-sm); line-height: 1.7; font-weight: 400; }
+
+/* ─── WORKFLOW — bold artistic numbers ─── */
+.workflow-track {
+  position: relative; margin-top: var(--space-12);
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-8);
+}
+.workflow-step { position: relative; text-align: left; padding-top: var(--space-4); }
+.workflow-num {
+  font-family: var(--font-display); font-size: clamp(80px, 10vw, 140px);
+  font-weight: 400; font-style: italic; line-height: 0.85;
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--accent);
+  opacity: 0.3;
+  position: absolute; top: -20px; left: -8px;
+  pointer-events: none; user-select: none;
+  transition: opacity 0.5s ease, transform 0.5s var(--ease-spring), -webkit-text-stroke-color 0.4s ease;
+}
+.workflow-step:hover .workflow-num { opacity: 0.55; transform: scale(1.05) rotate(-2deg); }
+.workflow-step-content { position: relative; z-index: 2; padding-top: 60px; }
+.workflow-step h3 { font-family: var(--font-heading); font-size: var(--text-lg); font-weight: 500; font-style: italic; margin-bottom: var(--space-2); letter-spacing: -0.01em; }
+.workflow-step p { color: var(--muted); font-size: var(--text-sm); font-weight: 400; line-height: 1.7; }
+.workflow-line {
+  position: absolute; top: 50%; left: 100%; width: 100%; height: 1px;
+  background: linear-gradient(90deg, var(--border-strong), transparent);
+  opacity: 0.5; pointer-events: none;
+}
+
+/* ─── CODE TERMINAL ─── */
+.code-block {
+  background: var(--surface-elevated); border: 1px solid var(--border-strong);
+  border-radius: var(--radius-xl); overflow: hidden;
+  backdrop-filter: var(--glass-blur-heavy); -webkit-backdrop-filter: var(--glass-blur-heavy);
+  box-shadow: var(--shadow-lg), inset 0 1px 0 var(--border-glass);
+  transition: all 0.5s var(--ease-out);
+}
+.code-block:hover { box-shadow: var(--shadow-xl), var(--shadow-glow), inset 0 1px 0 var(--border-glass); transform: translateY(-3px); }
+.code-chrome {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: var(--space-3) var(--space-6);
+  border-bottom: 1px solid var(--border);
+  background: color-mix(in oklab, var(--surface-elevated), transparent 25%);
+  backdrop-filter: blur(30px) saturate(1.6) brightness(1.05);
+  -webkit-backdrop-filter: blur(30px) saturate(1.6) brightness(1.05);
+  position: relative;
+}
+.code-chrome::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%);
+  pointer-events: none; border-radius: inherit;
+}
+.code-dots { display: flex; gap: 7px; }
+.code-dots i {
+  width: 12px; height: 12px; border-radius: 50%;
+  box-shadow: var(--shadow-inner), 0 0.5px 1px rgba(0,0,0,0.1);
+  position: relative;
+}
+.code-dots i::after {
+  content: ''; position: absolute; inset: 2px; border-radius: 50%;
+  background: linear-gradient(135deg, rgba(255,255,255,0.4) 0%, transparent 60%);
+}
+.code-dots i:nth-child(1) { background: linear-gradient(180deg, #ff6b6b 0%, #ee4444 100%); }
+.code-dots i:nth-child(2) { background: linear-gradient(180deg, #ffcc4d 0%, #f5a623 100%); }
+.code-dots i:nth-child(3) { background: linear-gradient(180deg, #5bd66b 0%, #28b840 100%); }
+.code-tabs { display: flex; gap: 3px; position: relative; z-index: 1; }
+.code-tab {
+  padding: 7px 18px; font-size: 0.8125rem; font-weight: 500;
+  color: var(--meta); background: none; border: none; cursor: pointer;
+  border-radius: var(--radius-sm); transition: all 0.35s var(--ease-out);
+  font-family: var(--font-body); position: relative;
+}
+.code-tab.active {
+  color: var(--fg);
+  background: var(--surface-elevated);
+  box-shadow: var(--shadow-sm), inset 0 1px 0 rgba(255,255,255,0.3), 0 1px 3px rgba(0,0,0,0.04);
+  backdrop-filter: blur(12px) saturate(1.3);
+  -webkit-backdrop-filter: blur(12px) saturate(1.3);
+}
+.code-tab:hover:not(.active) { color: var(--muted); background: color-mix(in oklab, var(--surface), transparent 50%); }
+.code-panels-wrapper { position: relative; overflow: hidden; transition: height 0.45s var(--ease-out); }
+.code-panel {
+  padding: var(--space-6) var(--space-8);
+  opacity: 0; transform: translateY(16px); pointer-events: none;
+  transition: opacity 0.35s var(--ease-out), transform 0.35s var(--ease-out);
+  position: absolute; top: 0; left: 0; right: 0;
+  visibility: hidden;
+}
+.code-panel.active { position: relative; opacity: 1; transform: translateY(0); pointer-events: auto; visibility: visible; }
+.code-panel.exiting { opacity: 0; transform: translateY(-12px); visibility: visible; }
+.code-panel pre {
+  font-family: var(--font-mono); font-size: 0.84rem; line-height: 1.9;
+  color: var(--fg-2); white-space: pre; overflow-x: auto;
+  scrollbar-width: none; -ms-overflow-style: none;
+  position: relative; z-index: 1;
+}
+.code-panel pre::-webkit-scrollbar { display: none; }
+.code-panel .code-line { display: block; opacity: 0; transform: translateX(-30px); }
+.code-panel.active .code-line { animation: water-flow 0.55s var(--ease-out) calc(var(--i, 0) * 0.05s) forwards; }
+@keyframes water-flow {
+  0% { opacity: 0; transform: translateX(-30px) skewX(-2deg); }
+  60% { transform: translateX(3px) skewX(0.5deg); }
+  100% { opacity: 1; transform: translateX(0) skewX(0deg); }
+}
+.code-panel .cm { color: var(--meta); }
+.code-panel .kw { color: var(--accent); transition: color 0.4s ease; }
+.code-panel .str { color: #4d8c5f; }
+[data-theme="dark"] .code-panel .str,
+[data-theme="midnight"] .code-panel .str,
+:root:not([data-theme]) .code-panel .str { color: #7ec699; }
+[data-theme="ocean"] .code-panel .str { color: #3d8a6e; }
+[data-theme="dusk"] .code-panel .str { color: #5a8a6e; }
+[data-theme="forest"] .code-panel .str { color: #6b8c3f; }
+[data-theme="ember"] .code-panel .str { color: #6b8c4d; }
+
+.code-panel .copy-code-btn {
+  position: absolute; top: var(--space-3); right: var(--space-4);
+  z-index: 10;
+  background: var(--surface-elevated); border: 1px solid var(--border);
+  color: var(--muted); padding: 10px 18px; border-radius: var(--radius-sm);
+  font-size: 0.75rem; cursor: pointer; font-family: var(--font-body);
+  backdrop-filter: blur(8px); box-shadow: var(--shadow-sm);
+  transition: all 0.25s var(--ease-spring);
+  min-width: 64px; min-height: 40px; text-align: center;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  user-select: none;
+}
+.code-panel .copy-code-btn::before {
+  content: ''; position: absolute;
+  top: -8px; left: -10px; right: -10px; bottom: -12px;
+  border-radius: inherit;
+  z-index: 1;
+}
+.code-panel .copy-code-btn:hover { color: var(--fg); border-color: var(--border-strong); box-shadow: var(--shadow-md); transform: translateY(-2px) scale(1.06); }
+.code-panel .copy-code-btn:active { transform: translateY(1px) scale(0.92); transition-duration: 0.08s; }
+.code-panel .copy-code-btn.copied { color: #fff; background: #17a34a; border-color: #17a34a; animation: copy-pop 0.45s var(--ease-spring); }
+
+/* ─── CTA ─── */
+.cta-section { text-align: center; padding: var(--space-24) 0; }
+.cta-section .heading { margin-bottom: var(--space-4); }
+.cta-section .lead { max-width: 500px; margin: 0 auto var(--space-10); }
+
+/* ─── FOOTER ─── */
+.footer { border-top: 1px solid var(--border); padding: var(--space-16) 0 var(--space-8); position: relative; z-index: 1; }
+.footer-inner { display: flex; justify-content: space-between; align-items: flex-start; gap: var(--space-8); flex-wrap: wrap; }
+.footer-brand { font-family: var(--font-display); font-size: var(--text-xl); font-weight: 500; margin-bottom: var(--space-3); letter-spacing: -0.02em; font-style: italic; }
+.footer-brand em { font-style: normal; color: var(--accent); font-family: var(--font-body); font-weight: 600; font-size: 0.65em; vertical-align: 0.12em; transition: color 0.4s ease; }
+.footer-desc { color: var(--meta); font-size: var(--text-sm); max-width: 260px; line-height: 1.7; font-weight: 400; }
+.footer-links { display: flex; gap: var(--space-16); }
+.footer-col h4 { font-size: var(--text-sm); font-weight: 600; margin-bottom: var(--space-4); color: var(--fg-2); }
+.footer-col a { display: block; color: var(--muted); font-size: var(--text-sm); padding: 3px 0; transition: color 0.2s ease; font-weight: 400; }
+.footer-col a:hover { color: var(--fg); }
+.footer-bottom { margin-top: var(--space-12); padding-top: var(--space-6); border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; color: var(--meta); font-size: var(--text-sm); font-weight: 400; }
+
+/* ─── SCROLL REVEAL — bidirectional ─── */
+[data-reveal] { transition: opacity 0.9s var(--ease-out), transform 0.9s var(--ease-out); }
+[data-reveal]:not(.in) { opacity: 0; }
+[data-reveal].in { opacity: 1; }
+[data-reveal].in:not([data-tilt]) { transform: translate(0,0) rotate(0deg) scale(1) skew(0deg); }
+[data-reveal][data-tilt].in { transform: none; }
+[data-reveal="up"]:not(.in) { transform: translateY(60px) rotate(0.5deg); }
+[data-reveal="down"]:not(.in) { transform: translateY(-50px) rotate(-0.5deg); }
+[data-reveal="left"]:not(.in) { transform: translateX(-60px) rotate(-1.5deg); }
+[data-reveal="right"]:not(.in) { transform: translateX(60px) rotate(1.5deg); }
+[data-reveal="scale"]:not(.in) { transform: scale(0.88) translateY(30px); }
+[data-reveal="rotate-left"]:not(.in) { transform: translateY(50px) rotate(-4deg) scale(0.95); }
+[data-reveal="rotate-right"]:not(.in) { transform: translateY(50px) rotate(4deg) scale(0.95); }
+[data-reveal="zoom"]:not(.in) { transform: scale(0.75); }
+[data-reveal="diagonal-tl"]:not(.in) { transform: translate(-40px, -30px) rotate(-2deg) scale(0.95); }
+[data-reveal="diagonal-br"]:not(.in) { transform: translate(40px, 30px) rotate(2deg) scale(0.95); }
+[data-reveal="skew-in"]:not(.in) { transform: translateX(-40px) skewX(-4deg); }
+[data-reveal="flip-up"]:not(.in) { transform: perspective(800px) rotateX(6deg) translateY(40px); }
+[data-delay="1"] { transition-delay: 0.04s; }
+[data-delay="2"] { transition-delay: 0.08s; }
+[data-delay="3"] { transition-delay: 0.12s; }
+[data-delay="4"] { transition-delay: 0.16s; }
+[data-delay="5"] { transition-delay: 0.2s; }
+[data-delay="6"] { transition-delay: 0.24s; }
+[data-delay="7"] { transition-delay: 0.28s; }
+[data-delay="8"] { transition-delay: 0.32s; }
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 1024px) {
+  :root { --gutter: 20px; }
+  section { padding: var(--space-20) 0; }
+  .features-constellation { grid-template-columns: repeat(2, 1fr); }
+  .feature-card { aspect-ratio: auto; min-height: 160px; }
+  .fc-1, .fc-2, .fc-3, .fc-4, .fc-5, .fc-6 { --hover-z-tilt: 0deg; }
+  .feature-card.revealed { transform: none; }
+  .workflow-track { grid-template-columns: 1fr; gap: var(--space-12); }
+  .workflow-line { display: none; }
+  .workflow-num { font-size: 80px; }
+  .code-tabs { gap: 2px; }
+  .code-tab { padding: 7px 14px; font-size: 0.78rem; }
+}
+@media (max-width: 768px) {
+  :root { --gutter: 16px; }
+  body { line-height: 1.55; }
+  section { padding: var(--space-12) 0; }
+  .section-header { margin-bottom: var(--space-10); }
+  .features-constellation { grid-template-columns: 1fr; gap: var(--space-5); }
+  .feature-card { aspect-ratio: auto; padding: var(--space-6) var(--space-5); min-height: auto; }
+  .feature-card-icon { width: 36px; height: 36px; margin-bottom: var(--space-4); }
+  .hero { padding: 60px 0 var(--space-12); min-height: auto; }
+  .brand-overline { margin-bottom: var(--space-5); }
+  .brand-overline-text { font-size: 1rem; }
+  .hero-tagline { font-size: 1.15rem; }
+  .hero-desc { margin-top: var(--space-6); }
+  .hero-desc-main { font-size: 0.9375rem; }
+  .hero-desc-detail { font-size: 0.8125rem; flex-wrap: wrap; justify-content: center; }
+  .hero-actions { margin-top: var(--space-8); }
+  .baseurl-pill { max-width: 100%; }
+  .baseurl-pill code { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 180px; }
+  .footer-inner { flex-direction: column; }
+  .footer-links { flex-direction: column; gap: var(--space-8); }
+  .footer-col a { padding: 10px 0; min-height: 44px; display: flex; align-items: center; }
+  .cursor-blob, .cursor-glow { display: none; }
+  .fluid-bg { opacity: 0.2; display: none; }
+  .models-strip .model-logo[data-reveal] { opacity: 0.55; transform: none; transition: none; }
+  .models-strip .model-logo[data-reveal]:not(.in) { opacity: 0.55; transform: none; }
+  .code-block { border-radius: var(--radius-lg); }
+  .code-panel { padding: var(--space-4) var(--space-5); }
+  .code-panel pre { font-size: 0.75rem; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: thin; }
+  .code-panel pre::-webkit-scrollbar { height: 4px; }
+  .code-panel pre::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 2px; }
+  .code-tabs { overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; flex-wrap: nowrap; }
+  .code-tabs::-webkit-scrollbar { display: none; }
+  .code-tab { padding: 12px 16px; min-height: 44px; display: inline-flex; align-items: center; white-space: nowrap; flex-shrink: 0; }
+  .floating-controls { position: fixed; bottom: var(--space-4); right: var(--space-4); transform: none !important; z-index: 900; }
+  .floating-controls:hover { transform: none !important; }
+  .workflow-num { font-size: 60px; }
+  .workflow-track { gap: var(--space-8); }
+  .theme-panel { right: -12px; }
+  .cta-section { padding: var(--space-16) 0; }
+  .cta-section .lead { margin-bottom: var(--space-8); }
+}
+@media (max-width: 480px) {
+  :root { --gutter: 14px; }
+  .display { font-size: clamp(2rem, 8vw, 3rem); }
+  .heading { font-size: clamp(1.25rem, 5vw, 1.75rem); }
+  .lead { font-size: var(--text-base); }
+  section { padding: var(--space-10) 0; }
+  .hero { padding: 48px 0 var(--space-10); }
+  .brand-overline { margin-bottom: var(--space-4); }
+  .brand-overline-text { font-size: 0.95rem; letter-spacing: 0.12em; }
+  .brand-overline-suffix { font-size: 0.7rem; }
+  .hero-actions { flex-direction: column; align-items: center; gap: var(--space-5); }
+  .hero-rotating { min-width: auto; }
+  .baseurl-pill { padding: var(--space-2) var(--space-3) var(--space-2) var(--space-4); gap: var(--space-2); font-size: 0.75rem; max-width: calc(100vw - 28px); }
+  .baseurl-pill code { max-width: 140px; }
+  .baseurl-pill .copy-btn { padding: 6px 14px; font-size: 0.6875rem; min-width: 44px; min-height: 32px; }
+  .floating-controls { position: fixed; bottom: var(--space-3); right: var(--space-3); padding: var(--space-1) var(--space-2); transform: none !important; }
+  .theme-panel { right: 0; min-width: 180px; }
+  .workflow-num { font-size: 48px; }
+  .workflow-step-content { padding-top: 44px; }
+  .feature-card { padding: var(--space-5) var(--space-4); }
+  .code-chrome { padding: var(--space-3) var(--space-4); }
+  .code-tab { padding: 10px 14px; font-size: 0.75rem; min-height: 44px; }
+  .code-panel .copy-code-btn { top: var(--space-3); right: var(--space-3); padding: 8px 12px; min-height: 36px; }
+  .footer-bottom { flex-direction: column; gap: var(--space-3); text-align: center; }
+}
+@media (max-width: 360px) {
+  :root { --gutter: 12px; }
+  .display { font-size: 1.75rem; }
+  .btn { padding: 12px 20px; font-size: 0.8125rem; min-height: 44px; }
+  .baseurl-pill { font-size: 0.6875rem; gap: var(--space-2); padding: var(--space-1) var(--space-2) var(--space-1) var(--space-3); }
+  .baseurl-pill code { max-width: 110px; }
+  .baseurl-pill .copy-btn { padding: 6px 12px; font-size: 0.625rem; min-width: 40px; min-height: 32px; }
+}
+
+/* ─── MODELS STRIP ─── */
+.models-strip {
+  padding: 40px 0;
+  position: relative; z-index: 1;
+  overflow: hidden;
+}
+.models-label {
+  text-align: center;
+  font-family: var(--font-mono); font-size: var(--text-sm);
+  color: var(--meta); letter-spacing: 0.04em; font-weight: 500;
+  margin-bottom: var(--space-6);
+}
+.models-logos {
+  display: flex; align-items: center; justify-content: center;
+  gap: clamp(36px, 5vw, 64px);
+  flex-wrap: wrap;
+}
+.model-logo {
+  width: 36px; height: 36px;
+  min-width: 36px; min-height: 36px;
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
+  cursor: default;
+  transition: transform 0.5s var(--ease-spring), opacity 0.4s var(--ease-out);
+  will-change: transform, opacity;
+  opacity: 0.55;
+}
+.model-logo img {
+  width: 100%; height: 100%;
+  min-width: 0; min-height: 0;
+  flex-shrink: 0;
+  display: block; object-fit: contain;
+  pointer-events: none;
+  -webkit-user-drag: none;
+  filter: grayscale(1) contrast(0.6) brightness(0.9);
+  transition: filter 0.5s var(--ease-out), opacity 0.4s var(--ease-out);
+}
+/* Per-logo brightness calibration — normalize perceived luminance */
+.model-logo[aria-label="ChatGPT"] img { filter: grayscale(1) contrast(0.5) brightness(1.4); }
+.model-logo[aria-label="Grok"] img    { filter: grayscale(1) contrast(0.5) brightness(1.4); }
+.model-logo[aria-label="Kimi"] img    { filter: grayscale(1) contrast(0.5) brightness(1.35); }
+.model-logo[aria-label="DeepSeek"] img { filter: grayscale(1) contrast(0.6) brightness(1.15); }
+.model-logo[aria-label="MiniMax"] img  { filter: grayscale(1) contrast(0.6) brightness(1.2); }
+.model-logo[aria-label="Claude"] img  { filter: grayscale(1) contrast(0.6) brightness(0.95); }
+.model-logo[aria-label="GLM"] img     { filter: grayscale(1) contrast(0.6) brightness(1.0); }
+.model-logo[aria-label="Gemini"] img  { filter: grayscale(1) contrast(0.65) brightness(0.85); }
+/* Size compensation for fill-rate differences */
+.model-logo[aria-label="Kimi"] { width: 34px; height: 34px; }
+.model-logo[aria-label="ChatGPT"] { width: 38px; height: 38px; }
+
+.model-logo:hover {
+  transform: translateY(-3px) scale(1.08);
+  opacity: 1;
+}
+.model-logo:hover img {
+  filter: grayscale(0) contrast(1) brightness(1) !important;
+}
+.models-logos.has-hover .model-logo:not(:hover) {
+  opacity: 0.2;
+}
+
+/* ─── Dark themes (bg ≈ black): heavy brighten + contrast compress ─── */
+:root[data-theme="dark"] .model-logo img,
+:root[data-theme="midnight"] .model-logo img {
+  filter: grayscale(1) contrast(0.45) brightness(2.0);
+}
+:root[data-theme="dark"] .model-logo[aria-label="ChatGPT"] img,
+:root[data-theme="dark"] .model-logo[aria-label="Grok"] img,
+:root[data-theme="dark"] .model-logo[aria-label="Kimi"] img,
+:root[data-theme="midnight"] .model-logo[aria-label="ChatGPT"] img,
+:root[data-theme="midnight"] .model-logo[aria-label="Grok"] img,
+:root[data-theme="midnight"] .model-logo[aria-label="Kimi"] img {
+  filter: grayscale(1) contrast(0.4) brightness(2.4);
+}
+:root[data-theme="dark"] .model-logo[aria-label="Gemini"] img,
+:root[data-theme="dark"] .model-logo[aria-label="Claude"] img,
+:root[data-theme="midnight"] .model-logo[aria-label="Gemini"] img,
+:root[data-theme="midnight"] .model-logo[aria-label="Claude"] img {
+  filter: grayscale(1) contrast(0.5) brightness(1.6);
+}
+:root[data-theme="dark"] .model-logo:hover img,
+:root[data-theme="midnight"] .model-logo:hover img {
+  filter: grayscale(0) contrast(1) brightness(1.15) !important;
+}
+
+/* ─── Ocean theme (bg: #f4f7fa — cool white, slightly blue) ─── */
+:root[data-theme="ocean"] .model-logo img {
+  filter: grayscale(1) contrast(0.6) brightness(0.92);
+}
+:root[data-theme="ocean"] .model-logo[aria-label="ChatGPT"] img,
+:root[data-theme="ocean"] .model-logo[aria-label="Grok"] img,
+:root[data-theme="ocean"] .model-logo[aria-label="Kimi"] img {
+  filter: grayscale(1) contrast(0.5) brightness(1.35);
+}
+:root[data-theme="ocean"] .model-logo[aria-label="DeepSeek"] img,
+:root[data-theme="ocean"] .model-logo[aria-label="MiniMax"] img {
+  filter: grayscale(1) contrast(0.6) brightness(1.15);
+}
+:root[data-theme="ocean"] .model-logo:hover img {
+  filter: grayscale(0) contrast(1) brightness(1) !important;
+}
+
+/* ─── Forest theme (bg: #f5f8f5 — cool white, slightly green) ─── */
+:root[data-theme="forest"] .model-logo img {
+  filter: grayscale(1) contrast(0.6) brightness(0.92);
+}
+:root[data-theme="forest"] .model-logo[aria-label="ChatGPT"] img,
+:root[data-theme="forest"] .model-logo[aria-label="Grok"] img,
+:root[data-theme="forest"] .model-logo[aria-label="Kimi"] img {
+  filter: grayscale(1) contrast(0.5) brightness(1.35);
+}
+:root[data-theme="forest"] .model-logo[aria-label="DeepSeek"] img,
+:root[data-theme="forest"] .model-logo[aria-label="MiniMax"] img {
+  filter: grayscale(1) contrast(0.6) brightness(1.15);
+}
+:root[data-theme="forest"] .model-logo:hover img {
+  filter: grayscale(0) contrast(1) brightness(1) !important;
+}
+
+/* ─── Dusk theme (bg: #f7f5fa — cool white, slightly purple) ─── */
+:root[data-theme="dusk"] .model-logo img {
+  filter: grayscale(1) contrast(0.6) brightness(0.92);
+}
+:root[data-theme="dusk"] .model-logo[aria-label="ChatGPT"] img,
+:root[data-theme="dusk"] .model-logo[aria-label="Grok"] img,
+:root[data-theme="dusk"] .model-logo[aria-label="Kimi"] img {
+  filter: grayscale(1) contrast(0.5) brightness(1.35);
+}
+:root[data-theme="dusk"] .model-logo[aria-label="DeepSeek"] img,
+:root[data-theme="dusk"] .model-logo[aria-label="MiniMax"] img {
+  filter: grayscale(1) contrast(0.6) brightness(1.15);
+}
+:root[data-theme="dusk"] .model-logo:hover img {
+  filter: grayscale(0) contrast(1) brightness(1) !important;
+}
+
+/* ─── Ember theme (bg: #faf8f4 — warm white, closest to default) ─── */
+:root[data-theme="ember"] .model-logo img {
+  filter: grayscale(1) contrast(0.6) brightness(0.9);
+}
+:root[data-theme="ember"] .model-logo[aria-label="ChatGPT"] img,
+:root[data-theme="ember"] .model-logo[aria-label="Grok"] img,
+:root[data-theme="ember"] .model-logo[aria-label="Kimi"] img {
+  filter: grayscale(1) contrast(0.5) brightness(1.4);
+}
+:root[data-theme="ember"] .model-logo[aria-label="DeepSeek"] img,
+:root[data-theme="ember"] .model-logo[aria-label="MiniMax"] img {
+  filter: grayscale(1) contrast(0.6) brightness(1.2);
+}
+:root[data-theme="ember"] .model-logo:hover img {
+  filter: grayscale(0) contrast(1) brightness(1) !important;
+}
+
+/* ─── System dark preference fallback ─── */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) .model-logo img {
+    filter: grayscale(1) contrast(0.45) brightness(2.0);
+  }
+  :root:not([data-theme]) .model-logo[aria-label="ChatGPT"] img,
+  :root:not([data-theme]) .model-logo[aria-label="Grok"] img,
+  :root:not([data-theme]) .model-logo[aria-label="Kimi"] img {
+    filter: grayscale(1) contrast(0.4) brightness(2.4);
+  }
+  :root:not([data-theme]) .model-logo[aria-label="Gemini"] img,
+  :root:not([data-theme]) .model-logo[aria-label="Claude"] img {
+    filter: grayscale(1) contrast(0.5) brightness(1.6);
+  }
+  :root:not([data-theme]) .model-logo:hover img {
+    filter: grayscale(0) contrast(1) brightness(1.15) !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .models-strip { padding: var(--space-8) 0; }
+  .models-logos { gap: clamp(24px, 3.5vw, 36px); }
+  .model-logo { width: 30px; height: 30px; min-width: 30px; min-height: 30px; }
+  .model-logo[aria-label="Kimi"] { width: 28px; height: 28px; min-width: 28px; min-height: 28px; }
+  .model-logo[aria-label="ChatGPT"] { width: 32px; height: 32px; min-width: 32px; min-height: 32px; }
+}
+@media (max-width: 480px) {
+  .models-logos { gap: 20px; }
+  .model-logo { width: 26px; height: 26px; min-width: 26px; min-height: 26px; }
+  .model-logo[aria-label="Kimi"] { width: 24px; height: 24px; min-width: 24px; min-height: 24px; }
+  .model-logo[aria-label="ChatGPT"] { width: 28px; height: 28px; min-width: 28px; min-height: 28px; }
+  .model-logo[aria-label="MiniMax"] { display: none; }
+}
+
+/* ─── REDUCED MOTION ─── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+  .cursor-blob, .cursor-glow { display: none; }
+  .fluid-bg { animation: none; opacity: 0.2; }
+  .fluid-bg .orb { animation: none; }
+  [data-reveal] { opacity: 1; transform: none; }
+  .hero::before { animation: none; }
+}
+</style>
+</head>
+<body>
+<!-- Fluid Background -->
+<div class="fluid-bg" aria-hidden="true"><div class="orb orb-1"></div><div class="orb orb-2"></div><div class="orb orb-3"></div></div>
+<!-- Cursor -->
+<div class="cursor-blob" id="cursor-blob"></div>
+<div class="cursor-glow" id="cursor-glow"></div>
+<!-- Floating Controls (theme + lang — newapi provides the top bar) -->
+<div class="floating-controls" id="floating-controls">
+  <button class="fc-lang-btn" id="lang-toggle" data-zh="En" data-en="中文">En</button>
+  <span class="fc-divider"></span>
+  <div class="theme-switcher">
+    <button class="theme-switcher-btn" id="theme-btn" aria-label="Switch theme"></button>
+    <div class="theme-panel" id="theme-panel">
+      <div class="theme-panel-title" data-zh="选择主题" data-en="Theme">选择主题</div>
+      <div class="theme-options">
+        <div class="theme-option-wrap">
+          <button class="theme-option active" data-t="light" aria-label="Light theme"></button>
+          <div class="theme-option-label">Light</div>
+        </div>
+        <div class="theme-option-wrap">
+          <button class="theme-option" data-t="dark" aria-label="Dark theme"></button>
+          <div class="theme-option-label">Dark</div>
+        </div>
+        <div class="theme-option-wrap">
+          <button class="theme-option" data-t="ocean" aria-label="Ocean theme"></button>
+          <div class="theme-option-label">Ocean</div>
+        </div>
+        <div class="theme-option-wrap">
+          <button class="theme-option" data-t="forest" aria-label="Forest theme"></button>
+          <div class="theme-option-label">Forest</div>
+        </div>
+        <div class="theme-option-wrap">
+          <button class="theme-option" data-t="dusk" aria-label="Dusk theme"></button>
+          <div class="theme-option-label">Dusk</div>
+        </div>
+        <div class="theme-option-wrap">
+          <button class="theme-option" data-t="ember" aria-label="Ember theme"></button>
+          <div class="theme-option-label">Ember</div>
+        </div>
+        <div class="theme-option-wrap">
+          <button class="theme-option" data-t="midnight" aria-label="Midnight theme"></button>
+          <div class="theme-option-label">Night</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Hero -->
+<section class="hero" data-od-id="hero">
+  <div class="container hero-content">
+    <div class="brand-overline" aria-label="GGUU AI">
+      <span class="brand-overline-text">GGUU</span><span class="brand-overline-suffix">AI</span>
+    </div>
+    <h1 class="display" data-reveal="up" data-delay="0">
+      <span data-zh="全球大模型" data-en="Global LLMs">全球大模型</span><br>
+      <span class="hero-rotating" id="rotating-text">Claude Code</span>
+    </h1>
+    <p class="hero-tagline" data-reveal="up" data-delay="1" data-zh="统一接口网关" data-en="Unified API Gateway">统一接口网关</p>
+    <div class="hero-desc" data-reveal="up" data-delay="2">
+      <p class="hero-desc-main" data-zh="兼容 OpenAI/Anthropic 协议，统一接入 GPT、Claude、Gemini、DeepSeek 等主流模型" data-en="OpenAI/Anthropic-compatible. Unified access to GPT, Claude, Gemini, DeepSeek and more.">兼容 OpenAI/Anthropic 协议，统一接入 GPT、Claude、Gemini、DeepSeek 等主流模型</p>
+      <p class="hero-desc-detail" data-zh="智能路由 · 调用日志 · 费用统计 · 智能容灾" data-en="Smart routing · Usage logs · Billing · Smart failover"><span data-zh="智能路由" data-en="Routing">智能路由</span><span class="sep">·</span><span data-zh="调用日志" data-en="Logs">调用日志</span><span class="sep">·</span><span data-zh="费用统计" data-en="Billing">费用统计</span><span class="sep">·</span><span data-zh="智能容灾" data-en="Failover">智能容灾</span></p>
+    </div>
+    <div class="hero-actions" data-reveal="up" data-delay="3">
+      <a href="{{SIGN_IN_URL}}" class="btn btn-primary smart-login" data-zh="立即免费试用" data-en="Start Free">立即免费试用</a>
+      <a href="{{DOCS_INTEGRATION_URL}}" class="btn btn-secondary" data-zh="查看接入文档" data-en="View Docs">查看接入文档</a>
+    </div>
+    <div class="baseurl-hint" data-reveal="up" data-delay="4" data-zh="替换基础 URL 即可接入" data-en="Replace the base URL to connect">替换基础 URL 即可接入</div>
+    <div class="baseurl-pill" data-reveal="scale" data-delay="4">
+      <code>{{API_BASE_URL}}</code>
+      <button class="copy-btn" onclick="copyUrl(this)" data-zh="复制" data-en="Copy">复制</button>
+    </div>
+  </div>
+</section>
+
+<!-- Models Strip -->
+<div class="models-strip" data-od-id="models">
+  <div class="container">
+    <p class="models-label" data-reveal="up" data-zh="覆盖全球主流大模型" data-en="Powering access to leading AI models">覆盖全球主流大模型</p>
+    <div class="models-logos" id="models-logos">
+      <div class="model-logo" data-reveal="up" data-delay="1" aria-label="ChatGPT">
+        <img src="assets/openai_logo.png">
+      </div>
+      <div class="model-logo" data-reveal="up" data-delay="2" aria-label="Claude">
+        <img src="assets/claude_logo.png">
+      </div>
+      <div class="model-logo" data-reveal="up" data-delay="3" aria-label="Gemini">
+        <img src="assets/gemini_logo.png">
+      </div>
+      <div class="model-logo" data-reveal="up" data-delay="4" aria-label="Grok">
+        <img src="assets/grok_logo.png">
+      </div>
+      <div class="model-logo" data-reveal="up" data-delay="5" aria-label="DeepSeek">
+        <img src="assets/deepseek_logo.png">
+      </div>
+      <div class="model-logo" data-reveal="up" data-delay="6" aria-label="Kimi">
+        <img src="assets/kimi_logo.png">
+      </div>
+      <div class="model-logo" data-reveal="up" data-delay="7" aria-label="GLM">
+        <img src="assets/glm_logo.png">
+      </div>
+      <div class="model-logo" data-reveal="up" data-delay="8" aria-label="MiniMax">
+        <img src="assets/minimax_logo.png">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Features -->
+<section id="features" data-od-id="features">
+  <div class="container">
+    <div class="section-header" data-reveal="up">
+      <p class="eyebrow" data-zh="核心优势" data-en="Core Advantages">核心优势</p>
+      <h2 class="heading" data-zh="为开发者打造的稳定 API 网关" data-en="A Stable API Gateway Built for Developers">为开发者打造的稳定 API 网关</h2>
+      <p class="lead" style="margin-top: var(--space-4); text-align: center;" data-zh="从快速接入、数据可视化到稳定调用，GGUU AI 助力开发者更快落地 AI 服务" data-en="From quick integration and data visualization to stable invocations, GGUU AI helps developers ship AI services faster">从快速接入、数据可视化到稳定调用，GGUU AI 助力开发者更快落地 AI 服务</p>
+    </div>
+    <div class="features-constellation">
+      <div class="feature-card fc-1" data-reveal="rotate-left" data-delay="1" data-tilt>
+        <div class="feature-card-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+        <h3 data-zh="国内直连，无需代理" data-en="Direct Access, No VPN">国内直连，无需代理</h3>
+        <p data-zh="多线 BGP 节点，覆盖电信、联通、移动，告别网络困扰，命令行工具开箱即用。" data-en="Multi-line BGP nodes covering all major carriers. CLI tools work out of the box.">多线 BGP 节点，覆盖电信、联通、移动，告别网络困扰，命令行工具开箱即用。</p>
+      </div>
+      <div class="feature-card fc-2" data-reveal="up" data-delay="2" data-tilt>
+        <div class="feature-card-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
+        <h3 data-zh="透明计费，按量付费" data-en="Transparent Pay-as-you-go">透明计费，按量付费</h3>
+        <p data-zh="按分组倍率与实际用量计费，余额、消耗可在控制台查看，未使用的真实充值余额支持快速退款。" data-en="Billed by actual usage with group multipliers. Unused real balance supports fast refund.">按分组倍率与实际用量计费，余额、消耗可在控制台查看，未使用的真实充值余额支持快速退款。</p>
+      </div>
+      <div class="feature-card fc-3" data-reveal="rotate-right" data-delay="3" data-tilt>
+        <div class="feature-card-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <h3 data-zh="数据边界" data-en="Data Boundary">数据边界</h3>
+        <p data-zh="绝不使用和留存 API 输入输出数据，业务数据由用户自身掌控。" data-en="Never use or retain API input/output data. Your business data stays under your control.">绝不使用和留存 API 输入输出数据，业务数据由用户自身掌控。</p>
+      </div>
+      <div class="feature-card fc-4" data-reveal="rotate-left" data-delay="4" data-tilt>
+        <div class="feature-card-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+        <h3 data-zh="全栈可观测" data-en="Full Observability">全栈可观测</h3>
+        <p data-zh="实时监控调用量与余额，一键配置限流、告警与安全策略。" data-en="Real-time monitoring. One-click rate limiting, alerts, and security.">实时监控调用量与余额，一键配置限流、告警与安全策略。</p>
+      </div>
+      <div class="feature-card fc-5" data-reveal="up" data-delay="5" data-tilt>
+        <div class="feature-card-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
+        <h3 data-zh="开发者友好" data-en="Developer Friendly">开发者友好</h3>
+        <p data-zh="适配 Claude Code、Cursor、Codex 等主流开发工具。" data-en="Works with Claude Code, Cursor, Codex and more.">适配 Claude Code、Cursor、Codex 等主流开发工具。</p>
+      </div>
+      <div class="feature-card fc-6" data-reveal="rotate-right" data-delay="6" data-tilt>
+        <div class="feature-card-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+        <h3 data-zh="统一接口，极速连通" data-en="Unified API, Instant Connect">统一接口，极速连通</h3>
+        <p data-zh="一个密钥连接所有大模型，多区域智能调度 + 自动故障转移确保业务稳定。" data-en="One key connects all LLMs. Multi-region routing + auto failover.">一个密钥连接所有大模型，多区域智能调度 + 自动故障转移确保业务稳定。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Workflow -->
+<section id="workflow" data-od-id="workflow">
+  <div class="container">
+    <div class="section-header" data-reveal="up">
+      <p class="eyebrow" data-zh="快速开始" data-en="Quick Start">快速开始</p>
+      <h2 class="heading" data-zh="3 步启动你的 AI 调用链路" data-en="Start your AI call chain in 3 steps">3 步启动你的 AI 调用链路</h2>
+    </div>
+    <div class="workflow-track">
+      <div class="workflow-step" data-reveal="rotate-left" data-delay="1">
+        <span class="workflow-num">01</span>
+        <div class="workflow-step-content">
+          <h3 data-zh="创建令牌" data-en="Create Token">创建令牌</h3>
+          <p data-zh="在控制台创建 API 令牌，并设置额度上限与模型列表。" data-en="Create API tokens in the console. Set quota limits and model list.">在控制台创建 API 令牌，并设置额度上限与模型列表。</p>
+        </div>
+        <div class="workflow-line"></div>
+      </div>
+      <div class="workflow-step" data-reveal="up" data-delay="3">
+        <span class="workflow-num">02</span>
+        <div class="workflow-step-content">
+          <h3 data-zh="获取配置" data-en="Get Config">获取配置</h3>
+          <p data-zh="复制 API 地址/Base URL 和 API Key，粘贴到开发工具配置中保存。" data-en="Copy the API endpoint / Base URL and API Key, paste into your dev tool config and save.">复制 API 地址/Base URL 和 API Key，粘贴到开发工具配置中保存。</p>
+        </div>
+        <div class="workflow-line"></div>
+      </div>
+      <div class="workflow-step" data-reveal="rotate-right" data-delay="5">
+        <span class="workflow-num">03</span>
+        <div class="workflow-step-content">
+          <h3 data-zh="开始调用" data-en="Start Calling">开始调用</h3>
+          <p data-zh="一键配置环境变量即可让 Claude Code、Codex CLI、Gemini CLI 接入 GGUUAI。" data-en="One-click env config to connect Claude Code, Codex CLI, Gemini CLI to GGUUAI.">一键配置环境变量即可让 Claude Code、Codex CLI、Gemini CLI 接入 GGUUAI。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Code -->
+<section id="code" data-od-id="code">
+  <div class="container">
+    <div class="section-header" data-reveal="up">
+      <p class="eyebrow" data-zh="接入配置" data-en="Integration">接入配置</p>
+      <h2 class="heading" data-zh="一行配置，即刻接入" data-en="One line config, instant access">一行配置，即刻接入</h2>
+    </div>
+    <div class="code-block" data-reveal="scale" data-delay="1">
+      <div class="code-chrome">
+        <div class="code-dots"><i></i><i></i><i></i></div>
+        <div class="code-tabs">
+          <button class="code-tab active" data-panel="claude">Claude Code</button>
+          <button class="code-tab" data-panel="codex">Codex</button>
+          <button class="code-tab" data-panel="gemini">Gemini CLI</button>
+        </div>
+        <div style="width:50px"></div>
+      </div>
+      <div class="code-panels-wrapper">
+        <div class="code-panel active" id="panel-claude">
+          <button class="copy-code-btn" onclick="copyCode(this)" data-zh="复制" data-en="Copy">Copy</button>
+          <pre><span class="code-line" style="--i:0"><span class="cm"># 1. 安装 Claude Code</span></span>
+<span class="code-line" style="--i:1"><span class="kw">npm install</span> -g @anthropic-ai/claude-code</span>
+<span class="code-line" style="--i:2"></span>
+<span class="code-line" style="--i:3"><span class="cm"># 2. 配置 GGUU AI 中转地址</span></span>
+<span class="code-line" style="--i:4"><span class="kw">export</span> ANTHROPIC_BASE_URL=<span class="str">"{{API_BASE_URL}}"</span></span>
+<span class="code-line" style="--i:5"><span class="kw">export</span> ANTHROPIC_AUTH_TOKEN=<span class="str">"sk-xxxxxxxxxx"</span></span>
+<span class="code-line" style="--i:6"></span>
+<span class="code-line" style="--i:7"><span class="cm"># 3. 验证安装</span></span>
+<span class="code-line" style="--i:8">claude --version</span></pre>
+        </div>
+        <div class="code-panel" id="panel-codex">
+          <button class="copy-code-btn" onclick="copyCode(this)" data-zh="复制" data-en="Copy">Copy</button>
+          <pre><span class="code-line" style="--i:0"><span class="cm"># 1. 安装 Codex CLI</span></span>
+<span class="code-line" style="--i:1"><span class="kw">npm install</span> -g @openai/codex</span>
+<span class="code-line" style="--i:2"></span>
+<span class="code-line" style="--i:3"><span class="cm"># 2. 配置 GGUUAI Provider</span></span>
+<span class="code-line" style="--i:4"><span class="cm"># ~/.codex/config.toml</span></span>
+<span class="code-line" style="--i:5">model_provider = <span class="str">"gguuai"</span></span>
+<span class="code-line" style="--i:6">model = <span class="str">"gpt-5.5"</span></span>
+<span class="code-line" style="--i:7">[model_providers.gguuai]</span>
+<span class="code-line" style="--i:8">name = <span class="str">"GGUUAI"</span></span>
+<span class="code-line" style="--i:9">base_url = <span class="str">"{{API_V1_BASE_URL}}"</span></span>
+<span class="code-line" style="--i:10">wire_api = <span class="str">"responses"</span></span>
+<span class="code-line" style="--i:11">requires_openai_auth = <span class="kw">true</span></span>
+<span class="code-line" style="--i:12"></span>
+<span class="code-line" style="--i:13"><span class="cm"># ~/.codex/auth.json</span></span>
+<span class="code-line" style="--i:14">{ <span class="str">"OPENAI_API_KEY"</span>: <span class="str">"sk-xxxxxxxxxx"</span> }</span>
+<span class="code-line" style="--i:15"></span>
+<span class="code-line" style="--i:16"><span class="cm"># 3. 验证安装</span></span>
+<span class="code-line" style="--i:17">codex --version</span></pre>
+        </div>
+        <div class="code-panel" id="panel-gemini">
+          <button class="copy-code-btn" onclick="copyCode(this)" data-zh="复制" data-en="Copy">Copy</button>
+          <pre><span class="code-line" style="--i:0"><span class="cm"># 1. 安装 Gemini CLI</span></span>
+<span class="code-line" style="--i:1"><span class="kw">npm install</span> -g @google/gemini-cli</span>
+<span class="code-line" style="--i:2"></span>
+<span class="code-line" style="--i:3"><span class="cm"># 2. 配置 GGUU AI 中转端点</span></span>
+<span class="code-line" style="--i:4"><span class="kw">export</span> GOOGLE_GEMINI_BASE_URL=<span class="str">"{{API_BASE_URL}}"</span></span>
+<span class="code-line" style="--i:5"><span class="kw">export</span> GEMINI_API_KEY=<span class="str">"sk-xxxxxxxxxx"</span></span>
+<span class="code-line" style="--i:6"></span>
+<span class="code-line" style="--i:7"><span class="cm"># 3. 验证安装</span></span>
+<span class="code-line" style="--i:8">gemini --version</span></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" data-od-id="cta">
+  <div class="container">
+    <h2 class="heading" data-reveal="zoom" data-zh="将大模型能力真正落地到业务流程" data-en="Bring LLM capabilities into your production workflow">将大模型能力真正落地到业务流程</h2>
+    <p class="lead" data-reveal="up" data-delay="1" data-zh="立即接入 GGUU AI API，统一管理模型调用、权限策略与成本控制，让智能能力稳定服务每一次真实业务。" data-en="Connect to GGUU AI API now. Unified model invocation, access policies, and cost control for every real business call.">立即接入 GGUU AI API，统一管理模型调用、权限策略与成本控制，让智能能力稳定服务每一次真实业务。</p>
+    <div data-reveal="scale" data-delay="2">
+      <a href="{{SIGN_IN_URL}}" class="btn btn-primary smart-login" data-zh="立即体验" data-en="Get Started">立即体验</a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer" data-od-id="footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div>
+        <div class="footer-brand">GGUU<em>AI</em></div>
+        <p class="footer-desc" data-zh="全球大模型统一接口网关，为开发者与设计师提供稳定、透明、安全的 AI 接入服务。" data-en="Unified LLM gateway for developers and designers. Stable, transparent, secure AI access.">全球大模型统一接口网关，为开发者与设计师提供稳定、透明、安全的 AI 接入服务。</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4 data-zh="产品" data-en="Product">产品</h4>
+          <a href="#features" data-zh="产品特性" data-en="Features">产品特性</a>
+          <a href="{{PRICING_URL}}" data-zh="计费规则" data-en="Billing Rules">计费规则</a>
+          <a href="{{DOCS_INTEGRATION_URL}}" data-zh="接入文档" data-en="Integration Docs">接入文档</a>
+        </div>
+        <div class="footer-col">
+          <h4 data-zh="支持" data-en="Support">支持</h4>
+          <a href="{{HELP_URL}}" data-zh="帮助中心" data-en="Help Center">帮助中心</a>
+          <a href="{{FAQ_URL}}" data-zh="常见问题" data-en="FAQ">常见问题</a>
+          <a href="{{CONTACT_URL}}" data-zh="联系我们" data-en="Contact">联系我们</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 GGUU AI</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ═══ THEME SWITCHER ═══ */
+const themeBtn = document.getElementById('theme-btn');
+const themePanel = document.getElementById('theme-panel');
+const themeSwitcher = document.querySelector('.theme-switcher');
+const floatingControls = document.getElementById('floating-controls');
+const themeOptions = document.querySelectorAll('.theme-option');
+let hoverCloseTimer = null;
+let panelIsOpen = false;
+
+function applyTheme(t) {
+  document.documentElement.setAttribute('data-theme', t);
+  themeOptions.forEach(o => o.classList.toggle('active', o.dataset.t === t));
+  localStorage.setItem('gguuai-theme', t);
+}
+
+function applyThemeWithReveal(t, originEl) {
+  const html = document.documentElement;
+
+  const doSwitch = () => {
+    html.setAttribute('data-theme', t);
+    themeOptions.forEach(o => o.classList.toggle('active', o.dataset.t === t));
+    localStorage.setItem('gguuai-theme', t);
+  };
+
+  // View Transition API — smooth crossfade with slight blur
+  if (document.startViewTransition) {
+    document.startViewTransition(() => {
+      doSwitch();
+    });
+  } else {
+    // Fallback: element-level CSS transitions
+    html.classList.add('theme-shifting');
+    doSwitch();
+    setTimeout(() => html.classList.remove('theme-shifting'), 500);
+  }
+}
+
+function openThemePanel() {
+  if (panelIsOpen) return;
+  panelIsOpen = true;
+  clearTimeout(hoverCloseTimer);
+  themePanel.classList.remove('closing');
+  themePanel.classList.add('open');
+}
+
+let themeSwitchCooldown = false;
+
+function closeThemePanel() {
+  if (!panelIsOpen) return;
+  if (themeSwitchCooldown) return;
+  panelIsOpen = false;
+  themePanel.classList.add('closing');
+  themePanel.classList.remove('open');
+  setTimeout(() => themePanel.classList.remove('closing'), 300);
+}
+
+themeBtn.addEventListener('click', (e) => {
+  e.stopPropagation();
+  if (panelIsOpen) {
+    closeThemePanel();
+  } else {
+    openThemePanel();
+  }
+});
+
+themeSwitcher.addEventListener('mouseenter', () => {
+  clearTimeout(hoverCloseTimer);
+});
+
+themePanel.addEventListener('mouseenter', () => {
+  clearTimeout(hoverCloseTimer);
+});
+
+themeSwitcher.addEventListener('mouseleave', (e) => {
+  if (!panelIsOpen) return;
+  if (themePanel.contains(e.relatedTarget) || e.relatedTarget === themePanel) return;
+  hoverCloseTimer = setTimeout(() => {
+    if (!themeSwitcher.matches(':hover') && !themePanel.matches(':hover')) {
+      closeThemePanel();
+    }
+  }, 180);
+});
+
+themePanel.addEventListener('mouseleave', (e) => {
+  if (!panelIsOpen) return;
+  if (themeSwitcher.contains(e.relatedTarget) || e.relatedTarget === themeSwitcher) return;
+  hoverCloseTimer = setTimeout(() => {
+    if (!themeSwitcher.matches(':hover') && !themePanel.matches(':hover')) {
+      closeThemePanel();
+    }
+  }, 180);
+});
+
+themeOptions.forEach(opt => {
+  opt.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+    const newTheme = opt.dataset.t;
+    if (currentTheme === newTheme) return;
+
+    themeSwitchCooldown = true;
+    clearTimeout(hoverCloseTimer);
+    applyThemeWithReveal(newTheme, opt);
+    setTimeout(() => { themeSwitchCooldown = false; }, 350);
+  });
+});
+
+document.addEventListener('click', (e) => {
+  if (themeSwitchCooldown) return;
+  if (!e.target.closest('.theme-switcher') && panelIsOpen) closeThemePanel();
+});
+
+const savedTheme = localStorage.getItem('gguuai-theme');
+if (savedTheme) {
+  applyTheme(savedTheme);
+} else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+  applyTheme('dark');
+} else {
+  applyTheme('light');
+}
+
+/* ═══ CURSOR — immediate tracking ═══ */
+const blob = document.getElementById('cursor-blob');
+const glow = document.getElementById('cursor-glow');
+const isMobile = window.matchMedia('(max-width: 768px)').matches;
+
+if (!isMobile) {
+  document.body.classList.add('has-custom-cursor');
+
+  const applyCursorPosition = (x, y) => {
+    const cursorTransform = `translate3d(${x}px, ${y}px, 0) translate(-50%, -50%)`;
+    blob.style.transform = cursorTransform;
+    glow.style.transform = cursorTransform;
+    blob.classList.add('active');
+    glow.classList.add('active');
+  };
+  const moveCursor = e => applyCursorPosition(e.clientX, e.clientY);
+
+  if (window.PointerEvent) {
+    window.addEventListener('pointermove', moveCursor, { passive: true });
+    if ('onpointerrawupdate' in window) {
+      window.addEventListener('pointerrawupdate', moveCursor, { passive: true });
+    }
+  } else {
+    window.addEventListener('mousemove', moveCursor, { passive: true });
+  }
+  document.addEventListener('mouseleave', () => {
+    blob.classList.remove('active');
+    glow.classList.remove('active');
+  });
+
+  document.querySelectorAll('[data-tilt], .feature-card').forEach(el => {
+    el.addEventListener('mouseenter', () => blob.classList.add('hover-card'));
+    el.addEventListener('mouseleave', () => blob.classList.remove('hover-card'));
+  });
+  document.querySelectorAll('.btn, .copy-btn, .copy-code-btn').forEach(el => {
+    el.addEventListener('mouseenter', () => blob.classList.add('hover-btn'));
+    el.addEventListener('mouseleave', () => blob.classList.remove('hover-btn'));
+  });
+  document.querySelectorAll('.code-block, .code-panel').forEach(el => {
+    el.addEventListener('mouseenter', () => blob.classList.add('hover-code'));
+    el.addEventListener('mouseleave', () => blob.classList.remove('hover-code'));
+  });
+  document.querySelectorAll('.display, .heading, .lead, .hero-tagline, h3, p, .eyebrow, .hero-desc-main, .hero-desc-detail, .footer-desc').forEach(el => {
+    el.addEventListener('mouseenter', () => { if (!blob.classList.contains('hover-card') && !blob.classList.contains('hover-btn') && !blob.classList.contains('hover-code')) blob.classList.add('hover-text'); });
+    el.addEventListener('mouseleave', () => blob.classList.remove('hover-text'));
+  });
+}
+
+/* ═══ BUTTON LIGHT FOLLOW ═══ */
+document.querySelectorAll('.btn').forEach(btn => {
+  btn.addEventListener('mousemove', e => {
+    const r = btn.getBoundingClientRect();
+    btn.style.setProperty('--btn-x', ((e.clientX - r.left) / r.width * 100) + '%');
+    btn.style.setProperty('--btn-y', ((e.clientY - r.top) / r.height * 100) + '%');
+  });
+});
+
+/* ═══ CARD GEOMETRIC TILT ═══ */
+document.querySelectorAll('[data-tilt]').forEach(card => {
+  let raf;
+  const zTilt = getComputedStyle(card).getPropertyValue('--hover-z-tilt').trim() || '0deg';
+  card.addEventListener('mousemove', e => {
+    cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(() => {
+      const r = card.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width;
+      const y = (e.clientY - r.top) / r.height;
+      const rx = (0.5 - y) * 18;
+      const ry = (x - 0.5) * 18;
+      card.style.transition = 'none';
+      card.style.transform = `perspective(800px) rotateX(${rx}deg) rotateY(${ry}deg) rotateZ(${zTilt}) translateY(-10px) scale3d(1.04,1.04,1.04)`;
+      card.style.setProperty('--mx', (x * 100) + '%');
+      card.style.setProperty('--my', (y * 100) + '%');
+    });
+  });
+  card.addEventListener('mouseleave', () => {
+    cancelAnimationFrame(raf);
+    card.style.transition = 'transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1)';
+    card.style.transform = 'none';
+    card.style.setProperty('--mx', '50%');
+    card.style.setProperty('--my', '50%');
+    setTimeout(() => { card.style.transition = ''; card.style.transform = ''; }, 700);
+  });
+});
+
+/* ═══ SCROLL REVEAL — BIDIRECTIONAL ═══ */
+const revealEls = document.querySelectorAll('[data-reveal]');
+const revealObs = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('in');
+      if (entry.target.hasAttribute('data-tilt')) {
+        setTimeout(() => entry.target.classList.add('revealed'), 900);
+      }
+    } else {
+      entry.target.classList.remove('in');
+      if (entry.target.hasAttribute('data-tilt')) {
+        entry.target.classList.remove('revealed');
+      }
+    }
+  });
+}, { threshold: 0.08, rootMargin: '0px 0px -60px 0px' });
+revealEls.forEach(el => revealObs.observe(el));
+
+/* ═══ HERO ROTATING TEXT ═══ */
+const tools = ['Claude Code', 'Codex', 'Gemini CLI', 'Open Code', 'Cursor', 'Openclaw', 'Hermes', 'Copilot', 'Kiro'];
+let toolIdx = 0;
+const rotEl = document.getElementById('rotating-text');
+
+setInterval(() => {
+  rotEl.style.transition = 'opacity 0.3s ease, transform 0.3s var(--ease-smooth)';
+  rotEl.style.opacity = '0';
+  rotEl.style.transform = 'translateY(14px) rotate(1.5deg) scale(0.95)';
+  setTimeout(() => {
+    toolIdx = (toolIdx + 1) % tools.length;
+    rotEl.textContent = tools[toolIdx];
+    rotEl.style.transform = 'translateY(-14px) rotate(-1.5deg) scale(0.95)';
+    requestAnimationFrame(() => {
+      rotEl.style.transition = 'opacity 0.45s ease, transform 0.45s var(--ease-spring)';
+      rotEl.style.opacity = '1';
+      rotEl.style.transform = 'translateY(0) rotate(0deg) scale(1)';
+    });
+  }, 300);
+}, 2400);
+
+/* ═══ CODE TABS — water-flow line-by-line + smooth height ═══ */
+const codeTabs = document.querySelectorAll('.code-tab');
+const codePanels = document.querySelectorAll('.code-panel');
+const panelsWrapper = document.querySelector('.code-panels-wrapper');
+
+function updateWrapperHeight(panel) {
+  if (!panelsWrapper || !panel) return;
+  panelsWrapper.style.height = panel.scrollHeight + 'px';
+}
+
+function triggerLineFlow(panel) {
+  const lines = panel.querySelectorAll('.code-line');
+  lines.forEach(line => {
+    line.style.animation = 'none';
+    line.style.opacity = '0';
+    line.style.transform = 'translateX(-30px) skewX(-2deg)';
+  });
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      lines.forEach((line, i) => {
+        line.style.animation = `water-flow 0.55s var(--ease-out) ${i * 0.05}s forwards`;
+      });
+    });
+  });
+}
+
+codeTabs.forEach(tab => {
+  tab.addEventListener('click', () => {
+    const targetId = 'panel-' + tab.dataset.panel;
+    const currentPanel = document.querySelector('.code-panel.active');
+    const nextPanel = document.getElementById(targetId);
+    if (currentPanel === nextPanel) return;
+
+    codeTabs.forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+
+    if (currentPanel) {
+      currentPanel.classList.add('exiting');
+      currentPanel.classList.remove('active');
+      setTimeout(() => { currentPanel.classList.remove('exiting'); }, 350);
+    }
+
+    setTimeout(() => {
+      nextPanel.classList.add('active');
+      triggerLineFlow(nextPanel);
+      updateWrapperHeight(nextPanel);
+    }, currentPanel ? 180 : 0);
+  });
+});
+
+const initialPanel = document.querySelector('.code-panel.active');
+triggerLineFlow(initialPanel);
+requestAnimationFrame(() => updateWrapperHeight(initialPanel));
+
+/* ═══ COPY — checkmark feedback ═══ */
+function copyUrl(btn) {
+  const url = '{{API_BASE_URL}}';
+  const onSuccess = () => {
+    const origText = btn.textContent;
+    btn.textContent = '✓';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = origText; btn.classList.remove('copied'); }, 2000);
+  };
+  if (navigator.clipboard && navigator.clipboard.writeText && window.isSecureContext) {
+    navigator.clipboard.writeText(url).then(onSuccess).catch(() => {
+      fallbackCopy(url); onSuccess();
+    });
+  } else {
+    fallbackCopy(url); onSuccess();
+  }
+}
+function copyCode(btn) {
+  if (btn.classList.contains('copied')) return;
+  const panel = btn.closest('.code-panel');
+  if (!panel) return;
+  const pre = panel.querySelector('pre');
+  if (!pre) return;
+  const text = pre.textContent;
+  const origText = btn.textContent;
+  const onSuccess = () => {
+    btn.textContent = '✓';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = origText; btn.classList.remove('copied'); }, 2200);
+  };
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(onSuccess).catch(() => {
+      fallbackCopy(text); onSuccess();
+    });
+  } else {
+    fallbackCopy(text); onSuccess();
+  }
+}
+document.querySelectorAll('.copy-code-btn').forEach(btn => {
+  btn.addEventListener('pointerdown', (e) => {
+    e.stopPropagation();
+  });
+});
+function fallbackCopy(text) {
+  const ta = document.createElement('textarea');
+  ta.value = text; ta.style.cssText = 'position:fixed;opacity:0;left:-9999px';
+  document.body.appendChild(ta); ta.select();
+  document.execCommand('copy');
+  document.body.removeChild(ta);
+}
+
+/* ═══ LANGUAGE ═══ */
+const langBtn = document.getElementById('lang-toggle');
+let lang = localStorage.getItem('gguuai-lang') || 'zh';
+
+function setLang(l) {
+  lang = l;
+  document.documentElement.lang = l === 'zh' ? 'zh-CN' : 'en';
+  langBtn.textContent = l === 'zh' ? 'En' : '中文';
+  document.querySelectorAll('[data-zh]').forEach(el => {
+    const text = l === 'zh' ? el.dataset.zh : el.dataset.en;
+    if (!text) return;
+    const arrow = el.querySelector('.arrow');
+    if (arrow) {
+      const textNode = Array.from(el.childNodes).find(n => n.nodeType === 3);
+      if (textNode) textNode.textContent = text;
+    } else {
+      el.textContent = text;
+    }
+  });
+  localStorage.setItem('gguuai-lang', l);
+}
+langBtn.addEventListener('click', () => setLang(lang === 'zh' ? 'en' : 'zh'));
+if (lang !== 'zh') setLang(lang);
+
+/* ═══ FLUID BG — parallax on scroll (desktop only) ═══ */
+const orbs = document.querySelectorAll('.fluid-bg .orb');
+let scrollY = 0;
+if (!isMobile) {
+  window.addEventListener('scroll', () => { scrollY = window.scrollY; }, { passive: true });
+  (function orbLoop() {
+    orbs.forEach((orb, i) => {
+      const speed = 0.02 + i * 0.01;
+      const xOff = Math.sin(scrollY * speed + i * 2) * 25;
+      const yOff = scrollY * (0.03 + i * 0.015);
+      orb.style.transform = `translate(${xOff}px, ${yOff}px)`;
+    });
+    requestAnimationFrame(orbLoop);
+  })();
+}
+
+/* ═══ MODELS STRIP — magnetic dock effect + hover focus ═══ */
+const modelsContainer = document.getElementById('models-logos');
+const modelLogos = modelsContainer ? modelsContainer.querySelectorAll('.model-logo') : [];
+
+if (modelLogos.length && !isMobile) {
+  modelsContainer.addEventListener('mouseenter', () => {
+    modelsContainer.classList.add('has-hover');
+  });
+  modelsContainer.addEventListener('mouseleave', () => {
+    modelsContainer.classList.remove('has-hover');
+    modelLogos.forEach(logo => {
+      logo.style.transform = '';
+    });
+  });
+
+  modelsContainer.addEventListener('mousemove', (e) => {
+    const containerRect = modelsContainer.getBoundingClientRect();
+    const mouseX = e.clientX;
+    const mouseY = e.clientY;
+
+    modelLogos.forEach(logo => {
+      const rect = logo.getBoundingClientRect();
+      const logoCenterX = rect.left + rect.width / 2;
+      const logoCenterY = rect.top + rect.height / 2;
+      const distX = mouseX - logoCenterX;
+      const distY = mouseY - logoCenterY;
+      const dist = Math.sqrt(distX * distX + distY * distY);
+
+      const maxDist = 160;
+      const maxPush = 3;
+
+      if (dist < maxDist && dist > 0) {
+        const force = (1 - dist / maxDist) * maxPush;
+        const pushX = -(distX / dist) * force;
+        const pushY = -(distY / dist) * force;
+
+        if (logo.matches(':hover')) {
+          logo.style.transform = `translateY(-3px) scale(1.08)`;
+        } else {
+          logo.style.transform = `translate(${pushX}px, ${pushY}px)`;
+        }
+      } else if (!logo.matches(':hover')) {
+        logo.style.transform = '';
+      }
+    });
+  });
+
+  modelLogos.forEach(logo => {
+    logo.addEventListener('mouseenter', () => {
+      blob.classList.add('hover-card');
+    });
+    logo.addEventListener('mouseleave', () => {
+      blob.classList.remove('hover-card');
+    });
+  });
+}
+/* ═══ SMART LOGIN REDIRECT ═══ */
+document.querySelectorAll('.smart-login').forEach(link => {
+  link.addEventListener('click', function(e) {
+    e.preventDefault();
+    window.open('{{SIGN_IN_URL}}', '_blank');
+  });
+});
+</script>
+</body>
+</html>

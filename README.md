@@ -43,9 +43,9 @@ Cloudflare Pages 构建设置：
 
 ```text
 Framework preset: VitePress
-Build command: npm run docs:build
+Build command: npm run build
 Build output directory: docs/.vitepress/dist
-Root directory: /
+Root directory: 留空，不要填写 /
 Production branch: main
 ```
 

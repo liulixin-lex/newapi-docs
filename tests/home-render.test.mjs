@@ -39,3 +39,13 @@ test('copies homepage assets into the render output', () => {
     rmSync(outDir, { recursive: true, force: true })
   }
 })
+
+test('homepage does not render a custom cursor circle', () => {
+  const template = readFileSync(join(rootDir, 'home', 'index.template.html'), 'utf8')
+
+  assert.doesNotMatch(template, /id="cursor-(?:blob|glow)"/)
+  assert.doesNotMatch(template, /\.cursor-(?:blob|glow)\b/)
+  assert.doesNotMatch(template, /\bhas-custom-cursor\b/)
+  assert.doesNotMatch(template, /\bhover-(?:card|btn|code|text)\b/)
+  assert.doesNotMatch(template, /\bisMobile\b/)
+})

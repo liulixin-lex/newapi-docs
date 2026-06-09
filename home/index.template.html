@@ -181,41 +181,6 @@ a { color: inherit; text-decoration: none; }
 @keyframes orb-b { 0%{transform:translate(0,0) scale(1)} 50%{transform:translate(-30px,40px) scale(0.94)} 100%{transform:translate(20px,-20px) scale(1.03)} }
 @keyframes orb-c { 0%{transform:translate(0,0) scale(1)} 50%{transform:translate(20px,30px) scale(1.05)} 100%{transform:translate(-15px,-10px) scale(0.97)} }
 
-/* ─── CURSOR — immediate ring tracking ─── */
-.cursor-blob {
-  position: fixed; left: 0; top: 0; z-index: 9999; pointer-events: none;
-  width: 30px; height: 30px; border-radius: 50%;
-  border: 1.5px solid var(--accent); opacity: 0;
-  transition: opacity 0.08s linear, background 0.08s linear,
-              border-color 0.08s linear, box-shadow 0.08s linear;
-  transform: translate3d(-100px, -100px, 0) translate(-50%, -50%);
-  will-change: transform, opacity;
-  background: transparent;
-}
-.cursor-blob.active { opacity: 0.82; }
-.cursor-blob.hover-card { width: 76px; height: 76px; opacity: 0.24; border-radius: 22%; background: var(--accent-soft); border-color: transparent; box-shadow: 0 0 18px var(--accent-glow); }
-.cursor-blob.hover-btn { width: 46px; height: 46px; opacity: 0.42; background: var(--accent-glow); border-color: var(--accent); box-shadow: 0 0 14px var(--accent-glow); }
-.cursor-blob.hover-code { width: 14px; height: 22px; opacity: 0.9; border-radius: 2px; background: var(--accent); border-color: var(--accent); animation: cursor-blink 1s step-end infinite; }
-@keyframes cursor-blink { 50% { opacity: 0.3; } }
-.cursor-blob.hover-text {
-  width: 50px; height: 50px; opacity: 0.3;
-  border-color: color-mix(in oklab, var(--accent), transparent 40%);
-  background: color-mix(in oklab, var(--accent), transparent 94%);
-  box-shadow: none;
-  transition: opacity 0.08s linear, background 0.08s linear,
-              border-color 0.08s linear, box-shadow 0.08s linear;
-}
-.cursor-glow {
-  position: fixed; left: 0; top: 0; z-index: 9998; pointer-events: none;
-  width: 180px; height: 180px; border-radius: 50%;
-  background: radial-gradient(circle, color-mix(in oklab, var(--accent), transparent 96%) 0%, color-mix(in oklab, var(--accent), transparent 99%) 36%, transparent 50%);
-  transform: translate3d(-100px, -100px, 0) translate(-50%, -50%);
-  opacity: 0; transition: opacity 0.08s linear;
-  will-change: transform, opacity;
-  mix-blend-mode: normal;
-}
-.cursor-glow.active { opacity: 0.12; }
-
 /* ─── LAYOUT ─── */
 .container { max-width: var(--container); margin: 0 auto; padding: 0 var(--gutter); position: relative; z-index: 1; }
 section { padding: var(--space-24) 0; position: relative; z-index: 1; }
@@ -765,7 +730,6 @@ html.theme-shifting .fluid-bg .orb {
   .footer-inner { flex-direction: column; }
   .footer-links { flex-direction: column; gap: var(--space-8); }
   .footer-col a { padding: 10px 0; min-height: 44px; display: flex; align-items: center; }
-  .cursor-blob, .cursor-glow { display: none; }
   .fluid-bg { opacity: 0.2; display: none; }
   .models-strip .model-logo[data-reveal] { opacity: 0.55; transform: none; transition: none; }
   .models-strip .model-logo[data-reveal]:not(.in) { opacity: 0.55; transform: none; }
@@ -1010,7 +974,6 @@ html.theme-shifting .fluid-bg .orb {
 /* ─── REDUCED MOTION ─── */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
-  .cursor-blob, .cursor-glow { display: none; }
   .fluid-bg { animation: none; opacity: 0.2; }
   .fluid-bg .orb { animation: none; }
   [data-reveal] { opacity: 1; transform: none; }
@@ -1021,9 +984,6 @@ html.theme-shifting .fluid-bg .orb {
 <body>
 <!-- Fluid Background -->
 <div class="fluid-bg" aria-hidden="true"><div class="orb orb-1"></div><div class="orb orb-2"></div><div class="orb orb-3"></div></div>
-<!-- Cursor -->
-<div class="cursor-blob" id="cursor-blob"></div>
-<div class="cursor-glow" id="cursor-glow"></div>
 <!-- Floating Controls (theme + lang — newapi provides the top bar) -->
 <div class="floating-controls" id="floating-controls">
   <button class="fc-lang-btn" id="lang-toggle" data-zh="En" data-en="中文">En</button>
@@ -1434,54 +1394,6 @@ if (savedTheme) {
   applyTheme('light');
 }
 
-/* ═══ CURSOR — immediate tracking ═══ */
-const blob = document.getElementById('cursor-blob');
-const glow = document.getElementById('cursor-glow');
-const isMobile = window.matchMedia('(max-width: 768px)').matches;
-
-if (!isMobile) {
-  document.body.classList.add('has-custom-cursor');
-
-  const applyCursorPosition = (x, y) => {
-    const cursorTransform = `translate3d(${x}px, ${y}px, 0) translate(-50%, -50%)`;
-    blob.style.transform = cursorTransform;
-    glow.style.transform = cursorTransform;
-    blob.classList.add('active');
-    glow.classList.add('active');
-  };
-  const moveCursor = e => applyCursorPosition(e.clientX, e.clientY);
-
-  if (window.PointerEvent) {
-    window.addEventListener('pointermove', moveCursor, { passive: true });
-    if ('onpointerrawupdate' in window) {
-      window.addEventListener('pointerrawupdate', moveCursor, { passive: true });
-    }
-  } else {
-    window.addEventListener('mousemove', moveCursor, { passive: true });
-  }
-  document.addEventListener('mouseleave', () => {
-    blob.classList.remove('active');
-    glow.classList.remove('active');
-  });
-
-  document.querySelectorAll('[data-tilt], .feature-card').forEach(el => {
-    el.addEventListener('mouseenter', () => blob.classList.add('hover-card'));
-    el.addEventListener('mouseleave', () => blob.classList.remove('hover-card'));
-  });
-  document.querySelectorAll('.btn, .copy-btn, .copy-code-btn').forEach(el => {
-    el.addEventListener('mouseenter', () => blob.classList.add('hover-btn'));
-    el.addEventListener('mouseleave', () => blob.classList.remove('hover-btn'));
-  });
-  document.querySelectorAll('.code-block, .code-panel').forEach(el => {
-    el.addEventListener('mouseenter', () => blob.classList.add('hover-code'));
-    el.addEventListener('mouseleave', () => blob.classList.remove('hover-code'));
-  });
-  document.querySelectorAll('.display, .heading, .lead, .hero-tagline, h3, p, .eyebrow, .hero-desc-main, .hero-desc-detail, .footer-desc').forEach(el => {
-    el.addEventListener('mouseenter', () => { if (!blob.classList.contains('hover-card') && !blob.classList.contains('hover-btn') && !blob.classList.contains('hover-code')) blob.classList.add('hover-text'); });
-    el.addEventListener('mouseleave', () => blob.classList.remove('hover-text'));
-  });
-}
-
 /* ═══ BUTTON LIGHT FOLLOW ═══ */
 document.querySelectorAll('.btn').forEach(btn => {
   btn.addEventListener('mousemove', e => {
@@ -1691,7 +1603,8 @@ if (lang !== 'zh') setLang(lang);
 /* ═══ FLUID BG — parallax on scroll (desktop only) ═══ */
 const orbs = document.querySelectorAll('.fluid-bg .orb');
 let scrollY = 0;
-if (!isMobile) {
+const enableDesktopMotion = window.matchMedia('(min-width: 769px)').matches;
+if (enableDesktopMotion) {
   window.addEventListener('scroll', () => { scrollY = window.scrollY; }, { passive: true });
   (function orbLoop() {
     orbs.forEach((orb, i) => {
@@ -1708,7 +1621,7 @@ if (!isMobile) {
 const modelsContainer = document.getElementById('models-logos');
 const modelLogos = modelsContainer ? modelsContainer.querySelectorAll('.model-logo') : [];
 
-if (modelLogos.length && !isMobile) {
+if (modelLogos.length && enableDesktopMotion) {
   modelsContainer.addEventListener('mouseenter', () => {
     modelsContainer.classList.add('has-hover');
   });
@@ -1751,14 +1664,6 @@ if (modelLogos.length && !isMobile) {
     });
   });
 
-  modelLogos.forEach(logo => {
-    logo.addEventListener('mouseenter', () => {
-      blob.classList.add('hover-card');
-    });
-    logo.addEventListener('mouseleave', () => {
-      blob.classList.remove('hover-card');
-    });
-  });
 }
 /* ═══ SMART LOGIN REDIRECT ═══ */
 document.querySelectorAll('.smart-login').forEach(link => {

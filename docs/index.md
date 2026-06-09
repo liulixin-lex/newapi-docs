@@ -13,6 +13,7 @@ description: GGUU AI 使用文档，覆盖注册、充值、API Key、CLI 配置
 <div class="doc-actions">
 <a class="doc-action primary" href="getting-started/register.html">从注册开始</a>
 <a class="doc-action" href="integration/cc-switch/index.html">查看配置工具</a>
+<a class="doc-action subtle" href="/" target="_self">前往 GGUU AI</a>
 </div>
 </div>
 <aside class="route-card" aria-label="五步上手路径">

@@ -48,7 +48,7 @@ description: GGUU AI 使用文档，覆盖注册、充值、API Key、CLI 配置
 </a>
 <a class="doc-card" href="models/pricing.html">
 <strong>我想理解费用</strong>
-<p>查看美元计费、汇率、分组倍率，以及海外模型和国产模型的价格示例。</p>
+<p>查看 1:1 汇率制、汇率折扣、分组倍率，以及海外模型和国产模型的价格示例。</p>
 </a>
 <a class="doc-card" href="clients/cherry-studio.html">
 <strong>我想配置聊天客户端</strong>

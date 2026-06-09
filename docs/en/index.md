@@ -48,7 +48,7 @@ description: GGUU AI user guide for account setup, credits, API keys, CLI setup,
 </a>
 <a class="doc-card" href="models/pricing.html">
 <strong>I want to understand billing</strong>
-<p>Review USD billing, exchange rate, group multipliers, and overseas and domestic model pricing examples.</p>
+<p>Review 1:1 exchange-rate credits, exchange-rate discount, group multipliers, and overseas and domestic model pricing examples.</p>
 </a>
 <a class="doc-card" href="clients/cherry-studio.html">
 <strong>I want a chat client</strong>

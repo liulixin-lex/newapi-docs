@@ -4,12 +4,12 @@
     "docsPath": "/docs/"
   },
   "links": {
-    "docs": "/docs/",
-    "docsIntegration": "/docs/integration/endpoint.html",
-    "pricing": "/docs/models/pricing.html",
-    "help": "/docs/",
-    "faq": "/docs/troubleshooting/faq.html",
-    "contact": "/docs/policies/contact.html",
+    "docs": "https://gguuai.aiaimax.cyou/docs/",
+    "docsIntegration": "https://gguuai.aiaimax.cyou/docs/integration/endpoint.html",
+    "pricing": "https://gguuai.aiaimax.cyou/docs/models/pricing.html",
+    "help": "https://gguuai.aiaimax.cyou/docs/",
+    "faq": "https://gguuai.aiaimax.cyou/docs/troubleshooting/faq.html",
+    "contact": "https://gguuai.aiaimax.cyou/docs/policies/contact.html",
     "consoleHome": "https://api.gguuai.com",
     "signIn": "https://api.gguuai.com/sign-in",
     "signUp": "https://api.gguuai.com/sign-up"

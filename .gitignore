@@ -5,6 +5,7 @@ dist-site/
 .cache/
 .temp/
 .tmp/
+.codex_tmp/
 .DS_Store
 Thumbs.db
 desktop.ini

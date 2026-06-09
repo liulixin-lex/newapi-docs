@@ -10,6 +10,7 @@
     "help": "/docs/",
     "faq": "/docs/troubleshooting/faq.html",
     "contact": "/docs/policies/contact.html",
+    "consoleHome": "https://api.gguuai.com",
     "signIn": "https://api.gguuai.com/sign-in",
     "signUp": "https://api.gguuai.com/sign-up"
   },

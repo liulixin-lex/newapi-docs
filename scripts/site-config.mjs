@@ -55,6 +55,7 @@ export function createTokenMap(config) {
     HELP_URL: config.links?.help || docsPath,
     FAQ_URL: config.links?.faq || `${docsPath}troubleshooting/faq.html`,
     CONTACT_URL: config.links?.contact || `${docsPath}policies/contact.html`,
+    CONSOLE_HOME_URL: config.links?.consoleHome || apiBaseUrl,
     SIGN_IN_URL: config.links?.signIn || `${apiBaseUrl}/sign-in`,
     SIGN_UP_URL: config.links?.signUp || `${apiBaseUrl}/sign-up`,
     API_BASE_URL: apiBaseUrl,

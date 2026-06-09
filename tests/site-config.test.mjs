@@ -19,6 +19,7 @@ const config = {
     help: '/docs/',
     faq: '/docs/troubleshooting/faq.html',
     contact: '/docs/policies/contact.html',
+    consoleHome: 'https://api.gguuai.com',
     signIn: 'https://api.gguuai.com/sign-in',
     signUp: 'https://api.gguuai.com/sign-up'
   },
@@ -46,6 +47,7 @@ test('creates deployment tokens from one site config', () => {
   assert.equal(tokens.CANONICAL_URL, 'https://gguuai.com/')
   assert.equal(tokens.DOCS_URL, '/docs/')
   assert.equal(tokens.DOCS_INTEGRATION_URL, '/docs/integration/endpoint.html')
+  assert.equal(tokens.CONSOLE_HOME_URL, 'https://api.gguuai.com')
   assert.equal(tokens.API_BASE_URL, 'https://api.gguuai.com')
   assert.equal(tokens.API_V1_BASE_URL, 'https://api.gguuai.com/v1')
   assert.equal(tokens.API_HOST, 'api.gguuai.com')

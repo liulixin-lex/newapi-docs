@@ -13,7 +13,7 @@ description: GGUU AI user guide for account setup, credits, API keys, CLI setup,
 <div class="doc-actions">
 <a class="doc-action primary" href="getting-started/register.html">Start with account setup</a>
 <a class="doc-action" href="integration/cc-switch/index.html">View setup tools</a>
-<a class="doc-action subtle" href="/" target="_self">Visit GGUU AI</a>
+<a class="doc-action subtle" href="{{CONSOLE_HOME_URL}}" target="_self">Visit GGUU AI</a>
 </div>
 </div>
 <aside class="route-card" aria-label="Five-step path">

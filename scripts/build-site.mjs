@@ -46,3 +46,4 @@ if (result.status !== 0) {
 }
 
 copyDirectory(docsDistDir, join(outDir, docsOutName))
+copyDirectory(docsDistDir, join(docsDistDir, docsOutName))

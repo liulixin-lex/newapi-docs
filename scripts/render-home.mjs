@@ -1,5 +1,5 @@
 import { copyFileSync, existsSync, mkdirSync, readdirSync, readFileSync, statSync, writeFileSync } from 'node:fs'
-import { dirname, join } from 'node:path'
+import { dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 import { createTokenMap, loadSiteConfig, renderTemplate } from './site-config.mjs'
@@ -8,11 +8,19 @@ const scriptDir = dirname(fileURLToPath(import.meta.url))
 const rootDir = join(scriptDir, '..')
 
 export function copyDirectory(sourceDir, targetDir) {
+  const resolvedTarget = resolve(targetDir)
+  const entries = readdirSync(sourceDir, { withFileTypes: true })
+
   mkdirSync(targetDir, { recursive: true })
 
-  for (const entry of readdirSync(sourceDir, { withFileTypes: true })) {
+  for (const entry of entries) {
     const sourcePath = join(sourceDir, entry.name)
     const targetPath = join(targetDir, entry.name)
+    const resolvedSource = resolve(sourcePath)
+
+    if (resolvedSource === resolvedTarget || resolvedSource.startsWith(`${resolvedTarget}\\`) || resolvedSource.startsWith(`${resolvedTarget}/`)) {
+      continue
+    }
 
     if (entry.isDirectory()) {
       copyDirectory(sourcePath, targetPath)

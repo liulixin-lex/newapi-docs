@@ -10,13 +10,13 @@
     "help": "https://gguuai.aiaimax.cyou/docs/",
     "faq": "https://gguuai.aiaimax.cyou/docs/troubleshooting/faq.html",
     "contact": "https://gguuai.aiaimax.cyou/docs/policies/contact.html",
-    "consoleHome": "https://api.gguuai.com",
-    "signIn": "https://api.gguuai.com/sign-in",
-    "signUp": "https://api.gguuai.com/sign-up"
+    "consoleHome": "https://gguuai.com",
+    "signIn": "https://gguuai.com/sign-in",
+    "signUp": "https://gguuai.com/sign-up"
   },
   "api": {
-    "baseUrl": "https://api.gguuai.com",
-    "v1BaseUrl": "https://api.gguuai.com/v1",
+    "baseUrl": "https://gguuai.com",
+    "v1BaseUrl": "https://gguuai.com/v1",
     "optimizedBaseUrl": "https://api.minimax.love",
     "optimizedV1BaseUrl": "https://api.minimax.love/v1"
   },

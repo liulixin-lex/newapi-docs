@@ -14,6 +14,7 @@ test('renders the homepage from centralized site config', () => {
   const tokens = createTokenMap(config)
   const template = readFileSync(join(rootDir, 'home', 'index.template.html'), 'utf8')
   const html = renderTemplate(template, tokens)
+  const plainText = html.replace(/<[^>]+>/g, '')
 
   assert.doesNotMatch(html, /\{\{[A-Z0-9_]+\}\}/)
   assert.doesNotMatch(html, /docs-346\.pages\.dev/)
@@ -25,7 +26,14 @@ test('renders the homepage from centralized site config', () => {
   assert.match(html, /href="https:\/\/gguuai\.aiaimax\.cyou\/docs\/troubleshooting\/faq\.html" target="_blank" rel="noopener noreferrer" data-zh="常见问题"/)
   assert.match(html, /data-zh="常见问题"/)
   assert.doesNotMatch(html, /data-zh="服务状态"/)
-  assert.match(html, /https:\/\/api\.gguuai\.com\/v1/)
+  assert.match(html, /https:\/\/gguuai\.com\/v1/)
+  assert.match(plainText, /# 2\. 验证安装\s+claude --version\s+# 3\. 配置 GGUUAI Provider/)
+  assert.match(plainText, /"CLAUDE_CODE_DISABLE_TERMINAL_TITLE": "1"/)
+  assert.match(plainText, /# 2\. 验证安装\s+codex --version\s+# 3\. 配置 GGUUAI Provider/)
+  assert.match(plainText, /disable_response_storage = true/)
+  assert.match(plainText, /model_reasoning_effort = "xhigh"/)
+  assert.doesNotMatch(plainText, /export ANTHROPIC_BASE_URL/)
+  assert.doesNotMatch(plainText, /"OPENAI_API_KEY": "sk-xxxxxxxxxx"/)
 })
 
 test('copies homepage assets into the render output', () => {

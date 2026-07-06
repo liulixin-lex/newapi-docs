@@ -22,7 +22,7 @@ const docsHomeEntries = [
 ]
 
 test('docs home pages include a subtle entry to the API console', () => {
-  assert.equal(tokens.CONSOLE_HOME_URL, 'https://api.gguuai.com')
+  assert.equal(tokens.CONSOLE_HOME_URL, 'https://gguuai.com')
 
   for (const entry of docsHomeEntries) {
     const content = readFileSync(join(rootDir, entry.file), 'utf8')

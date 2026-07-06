@@ -1187,33 +1187,50 @@ html.theme-shifting .fluid-bg .orb {
           <pre><span class="code-line" style="--i:0"><span class="cm"># 1. 安装 Claude Code</span></span>
 <span class="code-line" style="--i:1"><span class="kw">npm install</span> -g @anthropic-ai/claude-code</span>
 <span class="code-line" style="--i:2"></span>
-<span class="code-line" style="--i:3"><span class="cm"># 2. 配置 GGUU AI 中转地址</span></span>
-<span class="code-line" style="--i:4"><span class="kw">export</span> ANTHROPIC_BASE_URL=<span class="str">"{{API_BASE_URL}}"</span></span>
-<span class="code-line" style="--i:5"><span class="kw">export</span> ANTHROPIC_AUTH_TOKEN=<span class="str">"sk-xxxxxxxxxx"</span></span>
-<span class="code-line" style="--i:6"></span>
-<span class="code-line" style="--i:7"><span class="cm"># 3. 验证安装</span></span>
-<span class="code-line" style="--i:8">claude --version</span></pre>
+<span class="code-line" style="--i:3"><span class="cm"># 2. 验证安装</span></span>
+<span class="code-line" style="--i:4">claude --version</span>
+<span class="code-line" style="--i:5"></span>
+<span class="code-line" style="--i:6"><span class="cm"># 3. 配置 GGUUAI Provider</span></span>
+<span class="code-line" style="--i:7"><span class="cm"># ~/.claude/settings.json</span></span>
+<span class="code-line" style="--i:8">{</span>
+<span class="code-line" style="--i:9">  <span class="str">"env"</span>: {</span>
+<span class="code-line" style="--i:10">    <span class="str">"ANTHROPIC_BASE_URL"</span>: <span class="str">"{{API_BASE_URL}}"</span>,</span>
+<span class="code-line" style="--i:11">    <span class="str">"ANTHROPIC_AUTH_TOKEN"</span>: <span class="str">"你的GGUUAI APIKey"</span>,</span>
+<span class="code-line" style="--i:12">    <span class="str">"CLAUDE_CODE_ATTRIBUTION_HEADER"</span>: <span class="str">"0"</span>,</span>
+<span class="code-line" style="--i:13">    <span class="str">"CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC"</span>: <span class="str">"1"</span>,</span>
+<span class="code-line" style="--i:14">    <span class="str">"CLAUDE_CODE_DISABLE_TERMINAL_TITLE"</span>: <span class="str">"1"</span></span>
+<span class="code-line" style="--i:15">  }</span>
+<span class="code-line" style="--i:16">}</span></pre>
         </div>
         <div class="code-panel" id="panel-codex">
           <button class="copy-code-btn" onclick="copyCode(this)" data-zh="复制" data-en="Copy">Copy</button>
           <pre><span class="code-line" style="--i:0"><span class="cm"># 1. 安装 Codex CLI</span></span>
 <span class="code-line" style="--i:1"><span class="kw">npm install</span> -g @openai/codex</span>
 <span class="code-line" style="--i:2"></span>
-<span class="code-line" style="--i:3"><span class="cm"># 2. 配置 GGUUAI Provider</span></span>
-<span class="code-line" style="--i:4"><span class="cm"># ~/.codex/config.toml</span></span>
-<span class="code-line" style="--i:5">model_provider = <span class="str">"gguuai"</span></span>
-<span class="code-line" style="--i:6">model = <span class="str">"gpt-5.5"</span></span>
-<span class="code-line" style="--i:7">[model_providers.gguuai]</span>
-<span class="code-line" style="--i:8">name = <span class="str">"GGUUAI"</span></span>
-<span class="code-line" style="--i:9">base_url = <span class="str">"{{API_V1_BASE_URL}}"</span></span>
-<span class="code-line" style="--i:10">wire_api = <span class="str">"responses"</span></span>
-<span class="code-line" style="--i:11">requires_openai_auth = <span class="kw">true</span></span>
-<span class="code-line" style="--i:12"></span>
-<span class="code-line" style="--i:13"><span class="cm"># ~/.codex/auth.json</span></span>
-<span class="code-line" style="--i:14">{ <span class="str">"OPENAI_API_KEY"</span>: <span class="str">"sk-xxxxxxxxxx"</span> }</span>
-<span class="code-line" style="--i:15"></span>
-<span class="code-line" style="--i:16"><span class="cm"># 3. 验证安装</span></span>
-<span class="code-line" style="--i:17">codex --version</span></pre>
+<span class="code-line" style="--i:3"><span class="cm"># 2. 验证安装</span></span>
+<span class="code-line" style="--i:4">codex --version</span>
+<span class="code-line" style="--i:5"></span>
+<span class="code-line" style="--i:6"><span class="cm"># 3. 配置 GGUUAI Provider</span></span>
+<span class="code-line" style="--i:7"><span class="cm"># ~/.codex/config.toml</span></span>
+<span class="code-line" style="--i:8">disable_response_storage = <span class="kw">true</span></span>
+<span class="code-line" style="--i:9">model = <span class="str">"gpt-5.5"</span></span>
+<span class="code-line" style="--i:10">model_provider = <span class="str">"gguuai"</span></span>
+<span class="code-line" style="--i:11">model_reasoning_effort = <span class="str">"xhigh"</span></span>
+<span class="code-line" style="--i:12">model_verbosity = <span class="str">"high"</span></span>
+<span class="code-line" style="--i:13"></span>
+<span class="code-line" style="--i:14">[features]</span>
+<span class="code-line" style="--i:15">web_search_request = <span class="kw">true</span></span>
+<span class="code-line" style="--i:16"></span>
+<span class="code-line" style="--i:17">[model_providers.gguuai]</span>
+<span class="code-line" style="--i:18">base_url = <span class="str">"{{API_V1_BASE_URL}}"</span></span>
+<span class="code-line" style="--i:19">name = <span class="str">"gguuai"</span></span>
+<span class="code-line" style="--i:20">requires_openai_auth = <span class="kw">true</span></span>
+<span class="code-line" style="--i:21">wire_api = <span class="str">"responses"</span></span>
+<span class="code-line" style="--i:22"></span>
+<span class="code-line" style="--i:23"><span class="cm"># ~/.codex/auth.json</span></span>
+<span class="code-line" style="--i:24">{</span>
+<span class="code-line" style="--i:25"><span class="str">"OPENAI_API_KEY"</span>: <span class="str">"你的GGUUAI APIKey"</span></span>
+<span class="code-line" style="--i:26"> }</span></pre>
         </div>
         <div class="code-panel" id="panel-gemini">
           <button class="copy-code-btn" onclick="copyCode(this)" data-zh="复制" data-en="Copy">Copy</button>
